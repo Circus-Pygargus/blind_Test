@@ -1,0 +1,104 @@
+TODO :
+
+    _ transfert des données entre Admin page et Game page, voir cette page : 
+        https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
+
+    _ lors du stockage du gameConfig en db depuis la config page :
+        coller default (ou autre) dans la colonne name
+        ainsi qd on trouve ce nom, on sait qu'on peut la charger 
+        et plus besoin de se casser la tête avec la récup d'id ;)
+
+    _ Controller/ConfigController.php :: checkConfig() :
+        check les input reçus avec une regex, et n'envoyer 'ok' que si ok
+
+    _ templates/config.html.twig :: sendDatas(_data) :
+        afficher message de la réponse de ConfigController.php::checkConfig()
+
+    _ manque requètes sql dans Song.php
+    _ manque stockage sql dans ConfigController.php storeConfig()
+    |--> en cours
+
+    _ ajouter verif name exists avant les appels de méthode add() en bdd
+
+    _ long terme : 
+        - sauvegarder les Team, Player, GameConfig :            
+            - ajouter bdd table teams une colonne playing (bool) :
+                permettra de sauvegarder des équipes personalisées.
+            - utiliser cette colonne playing pour n'effacer 
+                que les équipes actuelle en cas de nouvelle config.
+            - ajouter edit() aux entités Team, Player et GameConfig
+                pour pouvoir modifer la partie en cours ou une sauvegarde.
+            - modif DeleteAll() dans les Entity pour prendre en compte
+                uniquement la valeur playing = true
+            - idem pour getAll()
+            _ modif getOne() pour pouvoir chercher la team par son nom
+                (plus facile de s'en souvenir)
+            - ajouter à player les différentes team sauvegardées auxquelles il a appartenu ?
+            - ajouter les colonnes id, playing et saved à game_config pour en garder d'autres
+                saved pour savoir si on la gardera après la fin de la partie
+                faire de m^me avec les autres entity
+        | 
+        |-> question : ça crée des trous dans la suite des id de la table,
+                ça craint pas un peu ?  
+
+
+        _ pour une version tout public en ligne :
+            - virer le table songs (ou mieux la remplir)
+                la remplacer par des appels à une api (deezer, spotify autre ? )
+                qui renverrais nom seulement les sons + infos + images de chaque Song
+                mais aussi une playlist des titres selon critères.
+                limiter à 10 secondes pour la légalité des droits du truc ?
+                Ou mieux faire un genre de partenariat :
+                pas de limite de chrono mais bouton pour aller acheter le titre,
+                en retour petit pourcentage de la vente.
+
+
+
+QUESTIONS :
+
+    _ comment 
+
+    _ dans app/src/Entity/Team.php add() :
+        comment fait-on pour écrire les différents @param dans le commentaire de la méthode ?
+        comme dans editScore() ? oui
+
+    _ comment stocker plusieurs valeurs dans une colonne ? 
+        possible directement des objets ?
+        par ex des player dans une team
+        ou des teams dans game_config ou des categories de question
+        D'ailleurs, ne serait-il pas mieux de coller toutes les catégories de la partie 
+            dans une seule colonne plutôt que dans 4 ? par ex avec une autre table catégories
+
+    _ j'aimerais ne pas avoir de player name ou team name identique dans une même colonne 
+        le réglage de colonne sur unique vérifie en bdd ? oui
+        Faut que je fasse une vérif aussi avant ? oui
+
+    _ droits des images : https://support.discogs.com/hc/en-us/search?utf8=%E2%9C%93&query=img+rights
+
+
+    _ src/Controller/ConfigController.php :
+        pourquoi les fonctions checkConfig() et storeConfig ont besoin d'être en protected 
+            au lieu de private pour être visible des autres méthodes de la même classe ?
+    |
+    |-> compris : il fallait ajouter $this devant l'appel de la méthode
+
+    _ j'ai le droit de faire ?
+        getOne (int $id) { sql }
+        getOne (string $name) { sql }  A testrer
+
+
+
+
+BUGS : 
+    _  templates/config.html.twig :: storeData() :
+        problème avec $counter en fin de fonction :
+        Pour chaque équipe, il n'enregistre que le dernier joueur,
+        résultat visible grace à console.log(_data) dans sendDatas(_data)
+        On peut aussi décommenter var_dump($decoded); dans src/Controller/ConfigController.php :: json()
+    |
+    |--> l'erreur semble venir de Entity/GameConfig.php add()   name et :name (instance au lieu de string) ? 
+            même couleur d'affichage dans Team.php et Player.php    
+        |-> nan j'ai rien dit, add() déconne justement car name est null
+            mais pourquoi name et :name sont écrit en bleu ??
+
+

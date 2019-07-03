@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Display help and results</title>
+</head>
+<body>
+    <header>
+        <h1>blind test</h1>
+    </header>
+
+    <main>    
+        <!-- used to display teams scores -->
+        <section id="teams-score_section">
+
+            <div id="teams-score_div"></div> 
+
+        </section>
+
+
+
+
+     
+        <!-- Infos about the pending / playing / played song -->
+        <section id="song_section">
+            <div id="song_div">
+                <!-- songs infos -->
+                <div id="song-row">
+                    <div id="song-infos_div">
+                        <div id="song-infos-titles_div" class="song-information">
+                            <div id="song-title">Titre en cours : </div>
+                            <div class="song-info-value" id="song-title-value">{{ song.title }}</div>
+                        </div>
+                        <div id="song-infos-singer_div" class="song-information">
+                            <div id="song-singer">Interprète : </div>
+                            <div class="song-info-value" id="song-singer-value"> {{ song.singer }}</div>
+                        </div>
+                        <div id="song-infos-category_div" class="song-information">
+                            <div id="song-category">Catégorie : </div>
+                            <div class="song-info-value" id="song-category-value">{{ song.category }}</div>
+                        </div>
+                        <div id="song-infos-points_div" class="song-information">
+                            <div id="song-points">Nombre de points :</div>
+                            <div class="song-info-value" id="song-points-value">{{ song.points }}</div>
+                        </div>
+                    </div>
+                <!--    <div id="song-infos_div">
+                        <div id="song-infos-titles_div">
+                            <div id="song-title">Titre en cours : </div>
+                            <div id="song-singer">Interprète : </div>
+                            <div id="song-category">Catégorie : </div>
+                            <div id="song-points">Nombre de points :</div>
+                        </div>
+                        <div id="song-infos-values_div">
+                            <div id="song-title-value">{{ song.title }}</div>
+                            <div id="song-singer-value"> {{ song.singer }}</div>
+                            <div id="song-category-value">{{ song.category }}</div>
+                            <div id="song-points-value">{{ song.points }}</div>
+                        </div>
+                    </div>
+                -->
+
+                    <!-- here we'll fill this div with css background-image -->
+                    <div id="song-img_div" style="background-image: url(public/assets/img/{{ song.picture }})">
+                <!--        <img src="public/img/{{ song.picture }}" alt="Une photo de {{ song.singer }}"> -->
+                    </div>
+                </div>
+                <!-- the song player -->
+                <div id="music-player_div">
+
+                    <audio id="music-player" controls
+                        src="public/songs/{{ song.path }}{{ song.file}}.{{ song.extension }}">
+                        Ce navigateur ne supporte pas le lecteur audio.
+                    </audio>
+                </div>
+                <!-- the control for game page -->
+                <div id="control-game-page_div">
+                    <div>
+                        <button id="openTab">OUVRE ONGLET</button>
+                    </div>
+                    <div>
+                        <button id="send">ENVOIE MESSAGE</button>                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <!-- used to display players scores -->
+        <section id="players-score_section">
+
+
+            <div id="players-score_div">
+           <!--     {% if config.has_players %}
+
+                {% block playersScore %}
+                {% for player in players %} 
+            -->
+                <div class="player_div" id="player-{{ player.id }}_div">
+                    <div class="player-name_div" data-teamid="{{ player.team_id }}" data-playerid={{ player.id }} style="color:{{ player.color }}">
+                        {{ player.name }}</div>
+                    <div class="player-score_div" id="score-player_{{ player.id }}" data-playerid={{ player.id }}>
+                        {{ player.score }}</div>
+                </div>
+             <!--     {% endfor %}
+                {% endblock %}
+                {% endif %}
+             -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        var teamsDivs = document.querySelector('#teams-score_div');
+        var playersDiv = document.querySelector('#players-score_div');
+
+        // waiting for the message from admin page
+        window.addEventListener('message', function(e) {	
+        var origin = e.origin;
+        // Adding this line protect from code injection ;)
+        if( origin !== 'http://localhost:8080')	return;
+
+        console.log('response : ' + e.data.purpose + '<br');
+
+        switch (e.data.purpose) {
+
+            case 'player':
+                pointsForAPlayer(e.data);
+                break;
+            case 'team':
+                pointsForATeam(e.data);
+                break;
+            case 'category':
+                break;
+            case 'singer':
+                break;
+            case 'picture':
+                break;
+            case 'category':
+                break;
+            case 'teams':
+                buildTeamsDiv(e.data);
+                break;
+            case 'players': 
+                buildPlayersDiv(e.data);
+                break;
+        }
+            
+
+         /*   document.getElementsByTagName('p')[0].innerHTML = 'Message from admin page :  ' + e.data;
+            document.getElementsByTagName('p')[0].innerHTML += 'Message from admin page :  ' + e.data.response;
+            document.getElementsByTagName('p')[0].innerHTML += 'Message from admin page :  ' + e.data.nbrTeams;
+            document.getElementsByTagName('p')[0].innerHTML += 'Message from admin page :  ' + e.data.team_1;
+            document.getElementsByTagName('p')[0].innerHTML += 'Message from admin page :  ' + e.data.team_2;
+            document.getElementsByTagName('p')[0].innerHTML += 'Message from admin page :  ' + e.data.team_2.score;
+            console.log('Message from main page:  ' + e.data);
+            */
+            //console.log('def: ' + JSON.parse(e.data));
+          //  console.log('def: ' + e.data);
+        }, false);
+
+        // a player has won this song
+        function pointsForAPlayer (data) {
+            var playerScoreDiv = document.querySelector('#score-player_' + data.playerId);
+            playerScore = playerScoreDiv.innerHTML;
+            playerScoreDiv.innerHTML = parseInt(playerScore) + parseInt(data.points);
+
+            console.log( 'this player (' + data.playerId + ') just won ' + data.points + ' ppoint(s)' );
+            // we need to sort the score div
+            sortScoreDiv('players');
+        }
+        // a team has won this song
+        function pointsForATeam (data) {
+            var teamScoreDiv = document.querySelector('#score-team_' + data.teamId);
+            teamScore = teamScoreDiv.innerHTML;
+            teamScoreDiv.innerHTML = parseInt(teamScore) + parseInt(data.points);
+            console.log( 'this team (' + data.teamId + ') just won ' + data.points + ' ppoint(s)' );
+            // we need to sort the score div
+            sortScoreDiv('teams');
+        }
+
+
+        // teams has arrived by postMessage() from admin page
+        function buildTeamsDiv (data) {
+            
+            Object.keys(data.teams).forEach(function(k){
+
+                var teamDiv = document.createElement('div');
+                teamDiv.id = 'team-' + data.teams[k]['id'] + '_div';
+                teamDiv.classList.add('team-div');
+                teamsDivs.appendChild(teamDiv);
+
+                var teamNameDiv = document.createElement('div');
+                teamNameDiv.id = 'name-team_' + data.teams[k]['id'];
+                teamNameDiv.setAttribute('data-teamid', data.teams[k]['id']);
+                teamNameDiv.classList.add('team-name_div');
+                teamNameDiv.innerHTML = data.teams[k]['name'];
+                teamNameDiv.style.color = data.teams[k].color;
+                //teamDiv.appendChild(teamNameDiv);
+
+                var teamScoreDiv = document.createElement('div');
+                teamScoreDiv.id = 'score-team_' + data.teams[k]['id'];
+                teamScoreDiv.setAttribute('data-teamid', data.teams[k]['id']);
+                teamScoreDiv.classList.add('team-score_div');
+                teamScoreDiv.innerHTML = 0;
+                //teamDiv.appendChild(teamScoreDiv);
+                teamDiv.innerHTML+= teamNameDiv.outerHTML + teamScoreDiv.outerHTML;
+
+             //   console.log(k + ' - ' + data.teams[k]['id'] + ' ' + data.teams[k]['color'] + '<br>');
+            });
+
+        }
+
+
+
+
+        // players have just arrived by message from admin page
+        function buildPlayersDiv (data) {
+
+            Object.keys(data.players).forEach(function(k){
+
+                var playerDiv = document.createElement('div');
+                playerDiv.id = 'team-' + data.players[k]['id'] + '_div';
+                playerDiv.classList.add('player-div');
+                playersDiv.appendChild(playerDiv);
+
+                var playerNameDiv = document.createElement('div');
+                playerNameDiv.id = 'name-player_' + data.players[k]['id'];
+                playerNameDiv.setAttribute('data-playerid', data.players[k]['id']);
+                playerNameDiv.classList.add('player-name_div');
+                playerNameDiv.innerHTML = data.players[k]['name'];
+                playerNameDiv.style.color = data.players[k].color;
+               // playersDiv.appendChild(playerNameDiv);
+
+                var playerScoreDiv = document.createElement('div');
+                playerScoreDiv.id = 'score-player_' + data.players[k]['id'];
+                playerScoreDiv.setAttribute('data-playerid', data.players[k]['id']);
+                playerScoreDiv.classList.add('player-score_div');
+                playerScoreDiv.innerHTML = 0;
+              //  playerDiv.appendChild(playerScoreDiv);
+
+                playerDiv.innerHTML = playerNameDiv.outerHTML + playerScoreDiv.outerHTML;
+
+             //   console.log(k + ' - ' + data.teams[k]['id'] + ' ' + data.teams[k]['color'] + '<br>');
+            });
+
+        }
+
+
+
+        function sortScoreDiv (groupToSort) {
+
+            console.log(groupToSort);
+            var divToSort = document.querySelectorAll('.' + groupToSort + '-score_div');
+            console.log('divToSort ' + divToSort);
+            var scoresById = [];
+
+            for (let i = 0; i < divToSort.length; i++) {
+
+                let scoreByIdForThis = {
+                                        id: divToSort[i].getAttribute('data-' + groupToSort + 'id'),
+                                        score: divToSort[i].innerHTML
+                }
+
+                scoresById.push(scoreByIdForThis);
+                console.log('scoresById ' + scoresById);
+            }
+            console.log('scoresById final ' + scoresById);
+
+            var sortedByScore = scoresById.slice(0);
+            console.log('sortedByScore ' + sortedByScore);
+
+            sortedByScore.sort(function(a,b) {
+                return b.score - a.score;
+            });
+
+            for (i = 0; i < sortedByScore.length; i++) {
+
+                let thisDiv = document.querySelector('#' + groupToSort + '-' + sortedByScore[i].id + '_div');
+                thisDiv.style.order = '-' + sortedByScore[i].score; 
+            }
+        }
+            
+   
+    </script>
+    
+</body>
+</html>

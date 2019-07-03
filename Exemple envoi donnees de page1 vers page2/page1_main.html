@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="author" content="Dennis Gabil"/>
+<meta name="description" content="This is a listener page for the message data being sent via the window.postMessage() method from SCRIPTVERSE.ACADEMY.">
+<meta name="date" content="05-05-2017"/>
+<meta name="keywords" content="postmessage listener, postmessage listener page"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta property="og:url" content="https://scriptverse.academy/sample/post-message-listener.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="window.postMessage() Listener Page - ScriptVerse"/>
+<meta property="og:image" content="https://scriptverse.academy/img/thumbnails/html5.png"/>
+<meta property="og:site_name" content="ScriptVerse"/>
+<meta property="og:description" content="This is a listener page for the message data being sent via the window.postMessage() method from SCRIPTVERSE.ACADEMY."/>
+
+<title>window.postMessage() Listener Page - ScriptVerse</title>
+
+
+<body>
+	<div>
+		<h1>Main page</h1>
+		<p></p>
+	</div>
+    
+	<script>
+		window.addEventListener('message', function(e) {	
+        var origin = e.origin;
+            // Adding this line protect from code injection ;)
+            if( origin !== 'http://localhost:8080')	return;
+            
+			document.getElementsByTagName('p')[0].innerHTML = 'Message from admin page :  ' + e.data;
+			console.log('Message from main page:  ' + e.data);
+		}, false);
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Richard Meuret">
+
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="public/css/config.css">
+</head>
+
+<body>
+    <header>
+        <h1>Réglages du blind test</h1>
+    </header>
+
+
+    <section class="fl-center">
+        <div class="width-content">
+           <!-- <h2>Configuration</h2> -->
+
+
+            <!-- Game config -->
+            <form id="configForm" method="POST" novalidate>
+
+                <!-- teams ? -->
+                <div class="form-group-radio" id="with-teams-div">
+                    <!-- <label class="form-label">Jouer en équipe</label>
+                    <input class="radio-input hasTeam" type="radio" name="has-team-true" id="has-team-true"
+                        value="true">Oui
+                    <input class="radio-input hasTeam" type="radio" name="has-team-false" id="has-team-false"
+                        value="false">Non -->                        
+                    <span class="form-title-span">Jouer en équipe : </span>
+                    <div>
+                        <input class="radio-input hasTeam" type="radio" name="has-team-true" id="has-team-true"
+                            value="true">
+                        <label for="has-team-true" class="true form-label-radio">Oui</label>
+                        <input class="radio-input hasTeam" type="radio" name="has-team-false" id="has-team-false"
+                            value="false">
+                        <label for="has-team-false" class="false form-label-radio">Non</label>
+                    </div>
+                </div>
+                <!--    <div class="form-group" id="teams-div" hidden="true">
+                    <label for="nb-teams-input" class="form-label">
+                        Nombre d'équipes
+                        <span class="msg-error">Nombre non valide</span>
+                    </label>
+                    <input type="text" class="nb-input" name="nb-teams-input" id="nb-teams-input" title="Entre 2 et 10"
+                        value="" autofocus>
+                </div>
+            -->
+
+                <!-- teams ? -->
+                <div class="form-group-radio" id="with-teams-names-div" hidden="true">
+                    <span class="form-title-span">Attribuer des noms aux équipes : </span>                    
+                    <div>
+                        <input class="radio-input has-team-names" type="radio" name="has-team-names-true" id="has-team-names-true"
+                            value="true">
+                        <label for="has-team-names-true" class="true form-label-radio">Oui</label>
+                        <input class="radio-input has-team-names" type="radio" name="has-team-names-false" id="has-team-names-false"
+                            value="false">
+                        <label for="has-team-names-false" class="false form-label-radio">Non</label>
+                    </div>
+                </div>
+
+
+                <!-- giving points to players ? -->
+                <div class="form-group-radio" id="players-points-div" hidden="true">
+                    <span class="form-title-span">Attribuer des points aux joueurs : </span>
+                    <div>
+                        <input class="radio-input has-players-points" type="radio" name="has-players-points-true"
+                            id="has-players-points-true" value="true">
+                        <label for="has-players-points-true" class="true form-label-radio">Oui</label>
+                        <input class="radio-input has-players-points" type="radio" name="has-players-points-false"
+                            id="has-players-points-false" value="false">
+                        <label for="has-players-points-false" class="false form-label-radio">Non</label>
+                    </div>
+                </div>
+                <!-- Count Down -->
+                <div class="option-group">
+                    <div class="form-group-radio" id="count-down-div" hidden="true">
+                        <span class="form-title-span">Avec compte à rebours : </span>
+                        <div>
+                            <input class="radio-input has-count-down" type="radio" name="count-down-true"
+                                id="count-down-true" value="true">
+                            <label for="count-down-true" class="true form-label-radio">Oui</label>
+                            <input class="radio-input has-count-down" type="radio" name="count-down-false"
+                                id="count-down-false" value="false">
+                            <label for="count-down-false" class="false form-label-radio">Non</label>
+                        </div>
+                    </div>
+    
+                    <div class="form-group-number" id="count-down-duration-div" hidden="true">
+                        <label for="count-down-duration" class="form-label-nb">
+                            Durée compte à rebours : 
+                        </label>
+                        <span class="msg-error" id="count-down-duration-msg-error">Nombre non valide</span>
+                        <input type="text" class="number-input" name="count-down-duration" id="count-down-duration"
+                            title="Entre 5 et 60" value="">
+                        <button class="option-button" id="fake-btn-count-down">OK</button>
+                    </div>
+                </div>
+
+                <!-- Help -->
+                <div class="option-group">
+                    <div class="form-group-radio" id="help-div" hidden="true">
+                        <span class="form-title-span">Aide : </span>
+                        <div>
+                            <input type="radio" class="radio-input has-help" name="help-true" id="help-true"
+                                value="true">
+                            <label for="help-true" class="true form-label-radio">Oui</label>
+                            <input type="radio" class="radio-input has-help" name="help-false" id="help-false"
+                                value="false">
+                            <label for="help-false" class="false form-label-radio">Non</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group-number" id="help-duration-div" hidden="true">
+                        <label for="help-duration" class="form-label-nb">
+                            Durée affichage aide : 
+                        </label>
+                        <span class="msg-error" id="help-duration-msg-error">Nombre non valide</span>
+                        <input type="text" class="number-input" name="help-duration" id="help-duration"
+                            title="Entre 0 et 30" value="">
+                        <button class="option-button" id="fake-btn-help">OK</button>
+                    </div>
+                </div>
+
+                <!-- random songs -->
+                <div class="form-group-radio" id="random-songs-div" hidden="true">
+                    <span class="form-title-span">Lecture aléatoire : </span>
+                    <div>
+                        <input type="radio" class="radio-input has-random-songs" name="random-songs-true"
+                            id="random-songs-true" value="true">
+                        <label for="random-songs-true" class="true form-label-radio">Oui</label>
+                        <input type="radio" class="radio-input has-random-songs" name="random-songs-false"
+                            id="random-songs-false" value="false">
+                        <label for="random-songs-false" class="false form-label-radio">Non</label>
+                    </div>
+                </div>
+
+                <!-- choose a playlist -->
+                <div class="form-group-playlists" id="choose-playlist-div" hidden="true">
+                    <span class="form-title-span">quelle playlist ?</span>
+                    <div id="playlists-div"></div>
+                </div>
+
+                <!-- How many questions -->
+                <div class="form-group-number" id="nb-questions-div" hidden="true">
+                    <label for="nb-questions" class="form-label-nb">
+                        Nombre de questions : 
+                    </label>
+                    <span class="msg-error" id="nb-questions-msg-error">
+                        Nombre non valide
+                    </span>
+                    <input type="text" class="number-input" name="nb-questions" id="nb-questions" title="Entre 5 et 50"
+                        value="">
+                    <button class="option-button" id="fake-btn-nb-questions">OK</button>
+                </div>
+
+                <!-- random category -->
+                <div class="form-group-radio" id="random-category-div" hidden="true">
+                    <span class="form-title-span">Catégories aléatoires : </span>
+                    <div>
+                        <input type="radio" class="radio-input has-random-category" name="random-category-true"
+                            id="random-category-true" value="true">
+                        <label for="random-category-true" class="true form-label-radio">Oui</label>
+                        <input type="radio" class="radio-input has-random-category" name="random-category-false"
+                            id="random-category-false" value="false">
+                        <label for="random-category-false" class="false form-label-radio">Non</label>
+                    </div>
+                </div>
+            
+                <!-- display category -->
+                <div class="form-group-radio" id="display-category-div" hidden="true">
+                    <span class="form-title-span">Affiche catégorie : </span>
+                    <div>
+                        <input type="radio" class="radio-input has-display-category" name="display-category-true"
+                            id="display-category-true" value="true">
+                        <label for="display-category-true" class="true form-label-radio">Oui</label>
+                        <input type="radio" class="radio-input has-display-category" name="display-category-false"
+                            id="display-category-false" value="false">
+                        <label for="display-category-false" class="false form-label-radio">Non</label>
+                    </div>
+                </div>
+
+                <!-- false button (used for onblur) -->
+                <!-- <div class="option-button-div" id="false-button-div" hidden="true">
+                    <div class="option-button">OK</div>
+                </div> -->
+
+                <!-- Categories -->
+                <div class="option-group" id="categories-div" hidden="true">
+                    <div class="form-group-checkbox">
+                        <span class="form-title-span">Catégories : </span>
+                        <input type="checkbox" class="category-checkbox-input" name="music" value="Music" id="music">
+                        <label for="music" class="form-label-category">Musique</label>
+                        <input type="checkbox" class="category-checkbox-input" name="movies" value="Movies" id="movies"> 
+                        <label for="movies" class="form-label-category">Films</label>
+                        <input type="checkbox" class="category-checkbox-input" name="cartoons" value="Cartoons" id="cartoons"> 
+                        <label for="cartoons" class="form-label-category">Dessins animés</label>
+                        <input type="checkbox" class="category-checkbox-input" name="tvShows" value="tvShows" id="tvShows"> 
+                        <label for="tvShows" class="form-label-category">Émissions TV</label> 
+                        <button type="button" class="option-button" id="categories-btn">OK</button>                      
+                    </div>
+                    <!-- <div class="option-button-div" id="categories-btn" hidden="true">
+                        <button type="button" class="option-button">OK</button>
+                    </div> -->
+                </div>
+
+                <!-- will include teams name and players name if needed -->
+                <div id="teams-details" hidden="true"></div>
+
+                <!-- will include players names if no teams -->
+                <div id="players-details" hidden="true"></div>
+
+
+
+                <!-- Players -->
+                <!-- <div class="form-group" id="player-list" hidden="true">
+                    <label class="form-label">
+                        Joueurs
+                        <span class="msg-error">Il faut déjà rensigner tous les champs
+                            joueurs</span>
+                    </label>
+                    <input type="text" class="playerName text-input" name="player[]">
+                    <input type="text" class="playerName text-input" name="player[]">
+                    <input type="text" class="playerName text-input" name="player[]">
+                    <input type="text" class="playerName text-input" name="player[]">
+                </div>
+                <div id="addPlayer" hidden="true">
+                    <button type="button" id="addPlayerBtn">Ajouter un joueur</button>
+                </div> -->
+            </form>
+
+            
+
+               
+        </div>
+    </section>
+
+    
+
+    <section id="main-buttons"> <!--  Bouton Envoyer -->
+        <div id="form-btn-div">
+            <button id="form-btn" type="submit">C'est parti !</button>
+            <span id="back-message"></span>
+        </div>
+        <!-- reload the page -->
+        <div id="do-it-again-div">
+            <button type="button" id="do-it-again">OUPS !<br>J'me suis trompé !</button>
+        </div> 
+    </section>
+
+    <!-- *******  pop ups ******** -->
+
+    <!-- error messages -->
+    <div class="msg-error-div" id ="fhgj"></div>
+    <div class="msg-error-div"></div>
+    <div class="msg-error-div"></div>
+    <div class="msg-error-div"></div>
+    <div class="msg-error-div"></div>
+    <div class="msg-error-div"></div>
+
+    <!-- new team color choice -->
+    <div class="pop-up" id="color-choice-pop-up" hidden="true">
+        <div id="title-color-choice-pop-up">Choix de la couleur de l'équipe</div>
+    <!--    <div id="color-choice-div"></div>   -->
+    </div>
+
+
+
+    <script>
+        /* ################################## VARIABLES #################################### */
+
+        // the form
+        var form = document.querySelector('#configForm');
+        // div containing team option
+        var hasTeamsDiv = document.querySelector("#with-teams-div");
+        // radio inputs 'Jouer en équipe'
+        var playWithTeams = document.querySelectorAll('.hasTeam');
+        // div containing team names option
+        var hasTeamsNamesDiv = document.querySelector("#with-teams-names-div");
+        // radio inputs 'Jouer en équipe'
+        var playWithTeamsNames = document.querySelectorAll('.has-team-names');
+
+        // div containing radio inputs 'players points'
+        var playersPointsDiv = document.querySelector('#players-points-div');
+        // radio inputs 'players points'
+        var playWithPlayersPoints = document.querySelectorAll('.has-players-points');
+
+        // div containing count down inputs
+        var countDownDiv = document.querySelector('#count-down-div');
+        // radio inputs 'count down'
+        var playWithCountDown = document.querySelectorAll('.has-count-down');
+        // div containing count down duration input
+        var countDownDurationDiv = document.querySelector('#count-down-duration-div');
+        // input 'Durée compte à rebours'
+        var countDownDuration = document.querySelector('#count-down-duration');
+        // fake ok button for count down
+        var fakeBtnCountDown = document.querySelector('#fake-btn-count-down');
+
+        // div containing 'help' inputs
+        var helpDiv = document.querySelector('#help-div');
+        // radio inputs help
+        var playWithHelp = document.querySelectorAll('.has-help');
+        // div containing help duration input
+        var helpDurationDiv = document.querySelector('#help-duration-div');
+        // input 'Durée aide'
+        var helpDuration = document.querySelector('#help-duration');
+        // fake ok button for help
+        var fakeBtnHelp = document.querySelector('#fake-btn-help');
+
+        // div containing 'random songs'
+        var randomSongsDiv = document.querySelector('#random-songs-div');
+        // radio inputs
+        var playWithRandomSongs = document.querySelectorAll('.has-random-songs');
+
+        // div containing 'choose playlist'
+        var choosePlaylistDiv = document.querySelector('#choose-playlist-div');
+        // div containing playlists
+        var playlistsDiv = document.querySelector('#playlists-div');
+
+        // div containing 'nb questions'
+        var nbQuestionsDiv = document.querySelector('#nb-questions-div');
+        // input 'nb questions'
+        var nbQuestions = document.querySelector('#nb-questions');
+        // fake ok button for nb questions
+        var fakeBtnNbQuestions = document.querySelector('#fake-btn-nb-questions');
+
+        // div containing 'random category'
+        var randomCategoryDiv = document.querySelector('#random-category-div');
+        // radio inputs
+        var playWithRandomCategory = document.querySelectorAll('.has-random-category');
+
+        // div containing 'display category'
+        var displayCategoryDiv = document.querySelector('#display-category-div');
+        // radio inputs
+        var playWithDisplayCategory = document.querySelectorAll('.has-display-category');
+
+        // fake button (used for text input blur)
+    //    var fakeBtn = document.querySelector('#false-button-div');
+
+        // div containing 'Catégories'
+        var categoriesDiv = document.querySelector('#categories-div');
+        // categories checkbox inputs
+        var categoriesCheckboxes = document.querySelectorAll('.category-checkbox-input');
+        // categories chosen button
+        var categoriesBtn = document.querySelector('#categories-btn');
+
+        // div containing teams name (and players name if players points enabled)
+        var teamsDetails = document.querySelector('#teams-details');
+
+        // div containing players name if no teams
+        var playersDetails = document.querySelector('#players-details');
+
+        // div containing the form button
+        var formBtnDiv = document.querySelector('#form-btn-div');
+        // form button
+        var formBtn = document.querySelector('#form-btn');
+        // span error message for this button
+        var backMessageSpan = document.querySelector('#back-message');
+        // div containing the reload page button
+        var doItAgainDiv = document.querySelector('#do-it-again-div');
+        // my reset button (reload page)
+        var doItAgain = document.querySelector('#do-it-again');
+
+
+        /* ######## pop ups ######## */
+        // team color choice popup
+        var colorChoicePopUp = document.querySelector('#color-choice-pop-up');
+        // team color choice (stores remaining colors for new team)
+       // var colorChoiceDiv = document.querySelector('#color-choice-div');
+
+
+
+        // for an easier addEventListener, I need 2 arrays
+        /**
+         * @var array multidimensionnal
+         * 
+         * Each of included arrays will be used to add an event listener
+         * 
+         * [][0] : object containing radio inputs about one option
+         * [][1] : the function to call when a radio input is clicked
+         */
+        var radioInputs = [
+            [playWithTeams, setTeamChoice],
+            [playWithTeamsNames, setTeamsNamesChoice],
+            [playWithPlayersPoints, setPlayersPoints],
+            [playWithCountDown, setCountDown],
+            [playWithHelp, setHelp],
+            [playWithRandomSongs, setRandomSongs],
+            [playWithRandomCategory, setRandomCategory],
+            [playWithDisplayCategory, setDisplayCategory],
+            // it works with checkboxes too ;)
+            [categoriesCheckboxes, setDisplayBtnCategories]
+        ];
+
+        /**
+         * @var array multidimensionnal
+         * 
+         * Each of included arrays will be used to add an event listener
+         * 
+         * [][0] : a text input
+         * [][1] : the function to call on blur event
+         */
+        //  textInputs[0][teamsNb, nbOfTeams],
+        var textInputs = [
+            [countDownDuration, setCountDownDuration],
+            [helpDuration, setHelpDuration],
+            [nbQuestions, setNbQuestions]
+        ];
+
+
+
+        // we need some more var to build the teams details div
+        // if true we'll have some teams
+        var dataHasTeams;
+        var dataHasTeamsNames;
+        // if true we'll have some players names
+        var dataHasPlayersPoints;
+        var dataHasCountDown;
+        var dataCountDownDuration;
+        var dataHasHelp;
+        var dataHelpDuration;
+        var dataHasRandomSongs;
+        var dataPlaylistId;
+        var dataNbQuestions;
+        var dataHasRandomCategory;
+        var dataHasDisplayCategory;
+        // Must be defined because we can't set property of undefined, ={} is enough ;)
+        var dataCategories = {};  // = {
+          //                      'music': '',
+            //                    'movies': '',
+              //                  'cartoons': '',
+                //                'tvShows': ''
+        //};
+
+
+
+        // we need 10 default colors for 10 possible teams
+    /*    var defaultColors = {
+                                red       : { color: '#ff0000', name: 'Saigneurs' },
+                                orange    : { color: '#ff8800', name: 'Cucurb\'s' },
+                                yellow    : { color: '#ffff00', name: 'Zoziaux'},
+                                green     : { color: '#00ff00', name: 'Pom\'potes'},
+                                blue      : { color: '#0099ff', name: 'Schtroumpfs'},
+                                turquoise : { color: '#00ffff', name: 'Turquoises'},
+                                purple    : { color: '#9900ff', name: 'Navets'},
+                                pink      : { color: '#ff00ff', name: 'Piggies'},
+                                grey      : { color: '#888888', name: 'Phoques'},
+                                white     : { color: '#ffffff', name: 'Lapins'}
+        };*/
+
+        var defaultColors = [
+            ['#ff0000', 'saigneurs'],
+            ['#ff8800', 'Cucurb\'s'],
+            ['#ffff00', 'Zoziaux'],
+            ['#00ff00', 'Pom\'potes'],
+            ['#0099ff', 'Schtroumpfs'],
+            ['#00ffff', 'Turquoises'],
+            ['#9900ff', 'Navets'],
+            ['#ff00ff', 'Piggies'],
+            ['#888888', 'Phoques'],
+            ['#ffffff', 'Lapins']
+        ];
+
+
+
+        // used to store name and color of each new team
+        var newTeamColor;
+        var newTeamName;
+        // storing the defaultColors key of the chosen team
+        // used to remove the chosen one so we don't have the same team twice
+        var newTeamKey;
+
+
+
+        /* ############################## EVENT LISTENERS ############################### */
+
+
+        // prevent default send of form on submit
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+        })
+
+        // assign event listeners to radio inputs
+        radioInputs.forEach(function (gameOption) {
+            for (var i = 0; i < gameOption[0].length; i++) {
+                gameOption[0][i].addEventListener('change', gameOption[1]);
+            }
+        });
+
+        // assign event listeners to text inputs
+        // on blur : check and store
+        textInputs.forEach(function (gameOption) {
+            gameOption[0].addEventListener('blur', gameOption[1]);
+        });
+        // on change : display the good fake button
+        textInputs.forEach(function (gameOption) {
+            // we use onInput action
+            gameOption[0].addEventListener('input', function () {
+                switch (gameOption[0]) {
+                    case countDownDuration : 
+                        if (gameOption[0].value !== '') {
+                            fakeBtnCountDown.style.opacity = 1;
+                        }
+                        else {
+                            fakeBtnCountDown.style.opacity = 0;
+                        }
+                        break;
+                    case helpDuration : 
+                        if (gameOption[0].value !== '') {
+                            fakeBtnHelp.style.opacity = 1;
+                        }
+                        else {
+                            fakeBtnHelp.style.opacity = 0;
+                        }
+                        break;
+                    case nbQuestions : 
+                        if (gameOption[0].value !== '') {
+                            fakeBtnNbQuestions.style.opacity = 1;
+                        }
+                        else {
+                            fakeBtnNbQuestions.style.opacity = 0;
+                        }
+                        break;
+                }
+            });
+        });
+        
+        
+
+        // categories have been set 
+        categoriesBtn.addEventListener('click', setCategories);
+
+        // settings seems to be fine, here is the play button 
+        formBtn.addEventListener('click', storeData);
+
+
+        //  fruits.forEach(function(item, index, array) {
+        //      console.log(item, index);
+        // First choose if teams (teams mode includes points game)
+        // option 'Jouer en équipe'
+        // for (var i = 0; i < playWithTeams.length; i++) {
+        //      playWithTeams[i].addEventListener('change', hasTeamChoice);
+        //  };
+
+        // choose number of teams
+        //   teamsNb.addEventListener('blur', nbOfTeams);
+
+        // choose if players get points  
+        //  for (var i = 0; i < playWithPlayersPoints.length; i++) {
+        //       console.log(playWithPlayersPoints[i]);
+        //       playWithPlayersPoints[i].addEventListener('change', hasPlayersPoints);
+        //   }
+
+        // has count down ?
+        //  for (var i = 0; i < playWithCountDown.length; i++) {
+        //       playWithCountDown[i].addEventListener('change', hasCountDown); 
+        //  }
+
+        // choose countDwon duration
+        //  countDownDuration.addEventListener('blur', setCountDownDuration);
+
+        // has help ?
+        //   for (var i = 0; i < playWithHelp.length; i++) {
+        //playWithHelp[i].
+        //  }
+
+
+
+
+        // reload page
+        doItAgain.addEventListener('click', function () {
+            location.reload();
+        });
+
+
+
+        /* ############################# FUNCTIONS ############################# */
+
+        // a 'Jouer en équipe' radio input has been chosen
+        function setTeamChoice() {
+
+            if (this.checked) {
+                // with teams
+                if (this.value === "true") {
+                    ///document.querySelector('#has-team-false').disabled = true;
+                    dataHasTeams = true;
+                    //    teams.hidden = false;
+                    hasTeamsDiv.hidden = true;
+                    hasTeamsNamesDiv.hidden = false;
+                }
+                // without teams
+                else {
+                    ///document.querySelector('#has-team-true').disabled = true;
+                    dataHasTeams = false;
+                    //    playersPointsDiv.hidden = false;
+                    hasTeamsDiv.hidden = true;
+                    playersPointsDiv.hidden = false;
+                }
+            }
+            // display the reload page button
+            doItAgainDiv.style.opacity = 1;
+        }
+
+
+
+        // a 'Add teams names' radio input has been chosen
+        function setTeamsNamesChoice () {
+
+            if (this.checked) {
+                // with teams names
+                if (this.value === 'true') {
+                    dataHasTeamsNames = true;
+                }
+                // without teams names
+                else {
+                    dataHasTeamsNames = false;
+                }
+                hasTeamsNamesDiv.hidden = true;
+                playersPointsDiv.hidden = false;
+            }
+        }
+
+
+
+        // radio input for players points has been click
+        function setPlayersPoints() {
+
+            if (this.checked) {
+                // with points for players
+                if (this.value === "true") {
+                    ///document.querySelector('#has-players-points-false').disabled = true;
+                    dataHasPlayersPoints = true;
+                }
+                // without points for players
+                else {
+                    ///document.querySelector('#has-players-points-true').disabled = true;
+                    dataHasPlayersPoints = false;
+                }
+                playersPointsDiv.hidden = true;
+                countDownDiv.hidden = false;
+            }
+        }
+
+
+
+        // radio input for ingame count down has been clicked
+        function setCountDown() {
+
+            if (this.checked) {
+                // with count down
+                if (this.value === "true") {
+                    ///document.querySelector('#count-down-false').disabled = true;
+                    dataHasCountDown = true;
+                    countDownDiv.hidden = true;
+                    countDownDurationDiv.hidden = false;
+                  //  fakeBtnCountDown.style.opacity = 1;
+                    countDownDuration.focus();
+                }
+                // with count down
+                else {
+                    ///document.querySelector('#count-down-true').disabled = true;
+                    dataHasCountDown = false;
+                    countDownDiv.hidden = true;
+                    helpDiv.hidden = false;
+                }
+            }
+        }
+
+
+
+        // Count down duration choosen
+        function setCountDownDuration() {
+
+            // between 5 and 60
+            regex = /^([5-9]|[1-5][0-9]|6[0])$/;
+            //console.log(regex.test(countDownDuration.value));
+            if (regex.test(countDownDuration.value)) {
+                dataCountDownDuration = parseInt(countDownDuration.value);
+                countDownDuration.readOnly = true;
+                countDownDuration.classList.remove('error');
+                document.querySelector('#count-down-duration-msg-error').classList.remove('msg-error--show');
+            //    fakeBtnCountDown.style.opacity = 0;
+                countDownDurationDiv.hidden = true;
+                helpDiv.hidden = false;
+            } else {
+                countDownDuration.classList.add('error');
+                document.querySelector('#count-down-duration-msg-error').classList.add('msg-error--show');
+            }
+        }
+
+
+
+        // a radio input for help has been clicked
+        function setHelp() {
+
+            if (this.checked) {
+                // with Help
+                if (this.value === "true") {
+                    ///document.querySelector('#help-false').disabled = true;
+                    dataHasHelp = true;
+                    helpDiv.hidden = true;
+                    helpDurationDiv.hidden = false;
+                //    fakeBtnHelp.style.opacity = 1;
+                    helpDuration.focus();
+                }
+                // no help wanted
+                else {
+                    ///document.querySelector('#help-true').disabled = true;
+                    dataHasHelp = false;
+                    helpDiv.hidden = true;
+                    displayCategoryDiv.hidden = false;
+                    nbQuestions.focus();
+                //    fakeBtnHelp.hidden = false;
+                }
+            }
+        }
+
+
+
+        // help duration chosen
+        function setHelpDuration() {
+
+            regex = /^([0-9]|[1-2][0-9]|3[0])$/;
+            if (regex.test(helpDuration.value)) {
+                dataHelpDuration = parseInt(helpDuration.value);
+                helpDuration.readOnly = true;
+                helpDuration.classList.remove('error');
+                document.querySelector('#help-duration-msg-error').classList.remove('msg-error--show');
+                helpDurationDiv.hidden = true;
+                displayCategoryDiv.hidden = false;
+                nbQuestions.focus();
+            } else {
+                helpDuration.classList.add('error');
+                document.querySelector('#help-duration-msg-error').classList.add('msg-error--show');
+            }
+        }
+
+
+
+        // a radio input for display category has been clicked
+        function setDisplayCategory() {
+
+            if (this.checked) {
+                // with display category
+                if (this.value === "true") {
+                    dataHasDisplayCategory = true;
+                    ///document.querySelector('#display-category-false').disabled = true;
+                }
+                // without display category
+                else {
+                    dataHasDisplayCategory = false;
+                    ///document.querySelector('#display-category-true').disabled = true;
+                }
+                displayCategoryDiv.hidden = true;
+                randomSongsDiv.hidden = false;
+            }
+        }
+
+
+
+        // a radio input for random songs has been clicked
+        function setRandomSongs() {
+
+            if (this.checked) {
+                // with ramdom songs
+                if (this.value === "true") {
+                    dataHasRandomSongs = true;
+                    randomSongsDiv.hidden = true;
+                    nbQuestionsDiv.hidden = false;
+                }
+                // without random songs
+                else {
+                    dataHasRandomSongs = false;
+                    randomSongsDiv.hidden = true;
+                //    categoriesDiv.hidden = false;
+                    askForPlaylists();
+                }                
+            }
+        }
+
+
+        // choose a playlist
+        function askForPlaylists() {
+            fetch('/config/playlists')
+            // then se lance si retour
+            // reponse : ma variable
+            .then( function(response){
+                // .json() : type de réponse pour récup un objet en json plutôt que du texte (on peut tester avec .text() pour voir)
+                return response.json();
+            })
+            .then( function(playlists){
+                // le html arrive en retour, on l'affiche dans body
+                //  console.log(playlists);
+                choosePlaylistDiv.hidden = false;
+                fillPlaylistsDiv(playlists);
+            })
+            // ici on gère les erreurs si mauvais retour ou erreur dans url, bref si erreur
+            .catch( function (error){
+                // pour voir différentes erreurs, on peu modif l'url dans fetch()
+                console.log('erreur demande playlists: ' + error.message);
+            });
+        }
+
+
+        // display available playlists
+        function fillPlaylistsDiv (playlists) {
+            for (i = 0; i < playlists.length; i++) {
+                console.log(playlists[i]);
+                var playlistDiv = document.createElement('div');
+                playlistDiv.setAttribute('data-playlist-id', playlists[i].id);
+                playlistDiv.classList.add('playlist_div');
+                playlistsDiv.appendChild(playlistDiv);
+                playlistDiv.innerHTML = playlists[i].name;
+                playlistDiv.addEventListener('click', function () {
+                    let preChosenPlaylist = document.querySelector('.chosen-playlist');
+                    if (preChosenPlaylist) {
+                        preChosenPlaylist.classList.remove('chosen-playlist');
+                    }
+                    event.target.classList.add('chosen-playlist');
+                    dataPlaylistId = event.target.getAttribute('data-playlist-id');
+
+                    categoriesDiv.hidden = true;
+                    teamsDetails.hidden = false;
+                    setTeamsDetailsContent();  
+                });
+            }
+        }
+
+
+        // number of questions chosen
+        function setNbQuestions() {
+
+            // betwwen 5 and 50
+            regex = /^([5-9]|[1-4][0-9]|5[0])$/;
+            if (regex.test(nbQuestions.value)) {
+                dataNbQuestions = parseInt(nbQuestions.value);
+                nbQuestions.readOnly = true;
+                nbQuestions.classList.remove('error');
+                document.querySelector('#nb-questions-msg-error').classList.remove('msg-error--show');
+            //    fakeBtnNbQuestions.style.opacity = 1;
+                nbQuestionsDiv.hidden = true;
+                randomCategoryDiv.hidden = false;
+            } else {
+                nbQuestions.classList.add('error');
+                document.querySelector('#nb-questions-msg-error').classList.add('msg-error--show');
+            }
+        }
+
+
+
+        // a radio input for random category has been clicked
+        function setRandomCategory() {
+
+            if (this.checked) {
+                // with ramdom category
+                if (this.value === "true") {
+                    dataHasRandomCategory = true;
+                    ///document.querySelector('#random-category-false').disabled = true;
+                }
+                // without random category
+                else {
+                    dataHasRandomCategory = false;
+                    ///document.querySelector('#random-category-true').disabled = true;
+                }                
+                randomCategoryDiv.hidden = true;
+                displayCategoryDiv.hidden = false;
+            }
+        }
+
+
+
+        // a category checkbox has baeen clicked, do we display the ok button ?
+        function setDisplayBtnCategories() {
+
+            okayFlag = false;
+            for (var i = 0; i < categoriesCheckboxes.length; i++) {                
+                if (categoriesCheckboxes[i].checked) {
+                    okayFlag = true;
+                }
+            }
+            // One checkbox is checked, it's ok
+            if (okayFlag) {                
+                categoriesBtn.style.opacity = 1;
+            }
+            // Need at least one category chosen
+            else {
+                categoriesBtn.style.opacity = 0;
+            }
+        }
+
+
+
+        // categories have been chosen (with previus function _setDisplayBtnCategories_ we're sure that at least one category is selected)
+        function setCategories() {
+            
+            for (var i = 0; i < categoriesCheckboxes.length; i++) {  
+                category = categoriesCheckboxes[i].name;
+                switch (category) {
+                    case 'music': 
+                        dataCategories.hasMusic = categoriesCheckboxes[i].checked;
+                        break;
+                    case 'movies': 
+                        dataCategories.hasMovies = categoriesCheckboxes[i].checked;
+                    case 'cartoons': 
+                        dataCategories.hasCartoons = categoriesCheckboxes[i].checked;
+                        break;
+                    case 'tvShows': 
+                        dataCategories.hasTvShows = categoriesCheckboxes[i].checked;
+                        break;
+                }
+                //dataCategories.category = categoriesCheckboxes[i].checked;
+            }
+            //console.log(dataCategories.category);
+           // categoriesBtn.hidden = true;
+            categoriesDiv.hidden = true;
+            teamsDetails.hidden = false;
+            setTeamsDetailsContent();
+        }
+
+
+
+        // here we need to fill 'Teams Details div' with content (teams colors and players names)
+        function setTeamsDetailsContent() {
+
+            // with teams
+            if (dataHasTeams) {
+                // build a div for the add teams button
+                addTeamsDiv = document.createElement('div');
+                addTeamsDiv.id = 'add-team-div';
+                teamsDetails.appendChild(addTeamsDiv);
+
+                // build a div to display teams
+                teamsDiv = document.createElement('div');
+                teamsDiv.id = 'teams-div';
+                teamsDetails.appendChild(teamsDiv);
+
+                // build the add teams button
+                addTeamsBtn = document.createElement('button');
+                addTeamsBtn.type = 'button';
+                addTeamsBtn.id = 'add-teams-btn';
+                addTeamsBtn.innerHTML = 'Ajouter<br>une équipe';
+                addTeamsDiv.appendChild(addTeamsBtn);
+                addTeamsBtn.addEventListener('click', addNewTeam);
+
+                // build the error message (max team nb is 10)
+                nbTeamsError = document.createElement('span');
+                nbTeamsError.classList.add('msg-error');
+                nbTeamsError.id = "nb-teams-error";
+                nbTeamsError.innerHTML = "Nombre maximum d\'équipes atteint.";
+                addTeamsDiv.appendChild(nbTeamsError);
+            }
+            // without teams but with players names
+            else if (dataHasPlayersPoints) {
+            // I still can use the same function to build new player
+                // build a div to display players
+                // here we use the same teamsDiv so it will be easier once in storeData() ;)
+                teamsDiv = document.createElement('div');
+                teamsDiv.id = 'teams-div';
+                teamsDetails.appendChild(teamsDiv);
+
+                var teamDiv = document.createElement('div');
+            //    teamDiv.classList.add("team-div");
+                teamDiv.id = "players-div";
+                teamDiv.dataColor = 'rgb(255, 255, 255)';
+                teamDiv.dataName = 'no name\'s team';
+                teamDiv.dataKey = 0;
+                teamDiv.style.border = "3px solid rgb(255, 255, 255)";
+                teamsDiv.appendChild(teamDiv);
+
+                playersDetails.hidden = false;
+                newPlayerBtn = document.createElement('button');
+                newPlayerBtn.type = 'button';
+                newPlayerBtn.id = 'new-player-button';
+                newPlayerBtn.innerHTML = 'Ajouter<br>un joueur';
+                newPlayerBtn.title = '20 joueurs max par équipe !';
+                teamDiv.appendChild(newPlayerBtn);
+                // set player color to white if no teams
+                playersDetails.dataColor = '#ffffff';
+                newPlayerBtn.addEventListener('click', addNewPlayer);
+            } 
+            // no teams and no players points
+            else {
+                // display form send button
+                formBtnDiv.style.opacity = 1;
+            }
+        }
+
+
+
+        // button add team has been clicked
+        function addNewTeam() {
+
+            // get the default color for this team
+            var newTeamNumber = document.querySelectorAll('.team-div').length;
+            // check if not more that 10 teams
+            if (newTeamNumber === 10) {
+                document.querySelector('#nb-teams-error').classList.add('msg-error--show');
+                return;
+            }
+
+            // show pop up
+            colorChoicePopUp.hidden = false;
+            colorChoiceDiv = document.createElement('div');
+            colorChoiceDiv.id = 'color-choice-div';
+            colorChoicePopUp.appendChild(colorChoiceDiv);
+
+            // build divs of remaining colors so that team can be chosen
+           // for (remainingColor in defaultColors) {
+            for(i=0; i<defaultColors.length; i++){
+                /*console.log(defaultColors.red.color);
+                console.log(Object.keys(defaultColors.red));
+                console.log(Object.keys(remainingColor));
+                console.log(remainingColor);
+                console.log(defaultColors[remainingColor].color);*/
+                var colorDiv = document.createElement('div');
+                // cette métthode pour accéder à ce que je veux !!!
+                colorDiv.style.backgroundColor = defaultColors[i][0];
+                colorDiv.dataName = defaultColors[i][1];
+                colorDiv.dataChosenKey = i;
+                colorDiv.classList.add('color-div');
+                colorChoiceDiv.appendChild(colorDiv);
+                // effacer la couleur choisie dans mon objet
+                colorDiv.addEventListener('click', function(event) {
+                   // console.log(event.target);
+                   // console.log(remainingColor);
+                    // store color and name
+                    newTeamColor = event.target.style.backgroundColor;
+                    newTeamName = event.target.dataName;
+                    newTeamKey = event.target.dataChosenKey;
+                    // delete the chosen color and name from default colors list
+                    defaultColors.splice(newTeamKey, 1);
+                      //  delete defaultColors[event.target.dataChosenColor];
+                    //    console.log(event.target.dataChosenColor);
+                    //    console.log(defaultColors);
+                       // console.log(event.target.parentNode);
+                        // retirer les couleurs proposées
+                    colorChoicePopUp.removeChild(event.target.parentNode);
+                    //    console.log('f' + colorChoiceDiv);
+                        //cacher la div de choix des couleurs
+                    colorChoicePopUp.hidden = true;
+
+                    buildTeamDiv();
+                });
+            }
+        }
+
+
+
+        //    console.log(defaultColors[i][0]);
+            //Creer la div de couleur
+            // stocker le i
+            //divcouleur.addEventlistner{
+             // On recupere i et on efface defaultColors[i] avec un
+            // defautCollors.splice(i, 1); 
+            //}
+      //  }
+      //  console.log(defaultColors);
+
+
+        // a team color has been chosen or has been changed
+  /*      function setTeamColor(event) {
+            console.log(event.target.style.backgroundColor + ' ' + event.target.dataName);
+            delete defaultColors[remainingColor];
+            // retirer les couleurs proposées
+            colorChoiceDiv.removeChild(colorDiv);
+            //cacher la div de choix des couleurs
+            colorChoicePopUp.hidden = true;
+            // console.log(event.target.value); // the chosen color
+            var teamColor = event.target.value;
+            var teamDiv = event.target.parentNode;
+            teamDiv.dataColor = teamColor;
+            teamDiv.style.borderColor = teamColor;
+
+            // change this team players color and write it in name attribute of the player name input
+            teamDivChilds = teamDiv.childNodes
+            for (var i = 0; i < teamDivChilds.length; i++) {
+                switch (teamDivChilds[i].type) {
+                    // the add player button
+                    case 'button': 
+                        teamDivChilds[i].style.backgroundColor = teamColor;
+                        break;
+                    case 'text': 
+                        teamDivChilds[i].style.color = teamColor;
+                        teamDivChilds[i].name = 'playername_' + teamColor;
+                        break;
+                    default:
+                        break;
+                }
+               // if (teamDivChilds[i].type === "text") {
+              //      teamDivChilds[i].color = teamColor;
+              //      teamDivChilds[i].name = 'playername_' + teamColor;
+              //  }
+            }
+
+        //    buildTeamDiv(teamColor, teamName);
+        }
+*/
+
+
+        // build the new team div
+        //function buildTeamDiv (teamColor, teamName) {
+        function buildTeamDiv () {
+        //    console.log(event.target.dataChosenColor);
+
+            // build a div for the new team
+            var teamDiv = document.createElement('div');
+            teamDiv.classList.add("team-div");
+            teamDiv.dataColor = newTeamColor;
+            teamDiv.dataName = newTeamName;
+            teamDiv.dataKey = newTeamKey;
+            teamDiv.style.border = "3px solid " + newTeamColor;
+            teamsDiv.appendChild(teamDiv);
+
+            // build a color input, this color will be included in the parent node (teamDiv) as data-color attribute
+        /*    colorInput = document.createElement('input');
+            colorInput.type = 'color';
+            colorInput.value = newTeamColor;
+            teamDiv.appendChild(colorInput);
+            colorInput.addEventListener('change', setTeamColor, false);
+        */
+            // if needed build a text input and for the team name
+            if (dataHasTeamsNames) {
+                teamNameInput = document.createElement('input');
+                teamNameInput.type = 'text';
+                teamNameInput.value = newTeamName;
+                teamNameInput.style.color = newTeamColor;
+                teamNameInput.classList.add('team-name-input', 'text-input');
+                teamDiv.appendChild(teamNameInput);
+                teamNameInput.addEventListener('change', setTeamName, false);
+            }
+
+            // need add player button ?
+            if (!dataHasPlayersPoints) {
+                displayPlayBtn();
+                return;
+            }
+
+            // build 'add new player' button
+            addPlayerBtn = document.createElement('button');
+            addPlayerBtn.type = "button";
+            addPlayerBtn.classList.add('add-player-btn');
+            addPlayerBtn.style.backgroundColor = newTeamColor;
+            addPlayerBtn.innerHTML = 'Ajouter<br>un joueur';
+            addPlayerBtn.title = '10 joueurs max par équipe !';
+            teamDiv.appendChild(addPlayerBtn);
+            addPlayerBtn.addEventListener('click', addNewPlayer);
+
+            // build the error message (max players per team is 10)
+            nbPlayersError = document.createElement('span');
+            nbPlayersError.classList.add('msg-error');
+            nbPlayersError.innerHTML = "Nombre maximum de joueurs pour cette équipe atteint.";
+            teamDiv.appendChild(nbPlayersError);
+        }
+
+
+
+        // a team name has been chosen or has been changed
+        function setTeamName (event) {
+
+            var teamDiv = event.target.parentNode;
+            teamDiv.dataName = event.target.value;
+        }
+
+
+
+        // button add player has been clicked
+        function addNewPlayer(event) {
+
+            // 10 players max per team
+            // get the parent div to know how many players are in the team
+            var addPlayerBtn = this;
+            var teamDiv = addPlayerBtn.parentNode;
+            var teamDivChilds = teamDiv.childNodes;
+            var playersCounter = 0;
+            for (var i = 0; i < teamDivChilds.length; i++) {
+                if (teamDivChilds[i].type === 'text') {
+                    playersCounter++;
+                }
+            }
+            // if teams
+            if (dataHasTeams) {
+                if (playersCounter === 10) {
+                    // pas de message d'erreur car le title du bouton donne le nbr max de joueurs par team
+                    return;
+                }
+            }
+            // no teams but players
+            else {
+                if (playersCounter === 20) {
+                    // pas de message d'erreur car le title du bouton donne le nbr max de joueurs par team
+                    return;
+                }
+            }
+
+            // build a text input for the new player
+            playerInput = document.createElement('input');
+            playerInput.type = 'text';
+            playerInput.classList.add('player-input', 'text-input');
+            playerInput.style.color = teamDiv.dataColor;
+            playerInput.title = '3 charactères minimum';
+            teamDiv.appendChild(playerInput);
+            playerInput.focus();
+
+            // check if we can display the Play button
+            displayPlayBtn();
+        }
+
+
+
+        
+        // check if we can display the Play button
+        function displayPlayBtn () {
+            var globalPlayersCounter = 0;
+            var playersCounter = 0;
+            // if teams
+            if (dataHasTeams) {
+                nbTeamsDiv = document.querySelectorAll('.team-div').length;
+
+                // if players points
+                if (dataHasPlayersPoints) {
+                    for (var i = 0; i < nbTeamsDiv.length; i++) {
+                        playersCounter = 0;
+                        if (teamDivChilds[i].type === 'text') {
+                            playersCounter++;
+                            globalPlayersCounter++;
+                        }
+                        if (playersCounter === 0) {
+                            return;
+                        }
+                    }
+                    if (globalPlayersCounter === 2) {
+                        return;
+                    }
+                }  
+                // no players points
+                else {
+                    if (nbTeamsDiv < 2) {
+                        return;
+                    }
+                }   
+            }
+            // no teams
+            else {
+                // we have players or we shouldn't be here ...
+                teamDiv = document.querySelector('#players-div');
+            //    var teamsDivContent = teamsDiv.childNodes;
+              //  var  teamDiv = teamsDivContent[0];
+                var teamDivContent = teamDiv.childNodes;
+                for (var i = 0; i < teamDivContent.length; i++) {
+                    if (teamDivContent[i].type === 'text') {
+                        playersCounter++;
+                    }
+                }
+                if (playersCounter === 0) {
+                    return;
+                }
+            }
+
+            // there is enough players inputs or teams, we can display the play button
+            formBtnDiv.style.opacity = 1;
+        }
+
+
+
+        // check if everything is good and store settings in data
+        function storeData () {
+            var data = {};
+            // check text inputs with regex, display message and get out of the function if error
+            var teamNamesErrorFlag = false;
+            var teamNamesErrorsCounter = 0;
+            var playerNamesErrorFlaf = false;
+            var playerNamesErrorsCounter = 0;
+            var regex = /^.{3,15}$/;   
+            var textInputs = document.querySelectorAll('.text-input');
+            for (var i = 0; i < textInputs.length; i++) {
+                if (!regex.test(textInputs[i].value)) {
+                    if (textInputs[i].classList.contains('team-name-input')) {
+                        teamNamesErrorFlag = true;
+                        teamNamesErrorsCounter++;
+                    }
+                    else if (textInputs[i].classList.contains('player-input')) {
+                        playerNamesErrorFlaf = true;
+                        playerNamesErrorsCounter++;
+                    }
+                    textInputs[i].style.borderColor = '#ff0000';
+                }
+                // let's be sure that if the name was corrected, it now has his border color back
+                else {
+                    textInputs[i].style.borderColor = 'rgba(255,255,255,.5)';
+                }
+            }
+            if (teamNamesErrorFlag || playerNamesErrorFlaf) {
+                var errMsg = "";
+                if (!teamNamesErrorFlag) {
+                    if (playerNamesErrorsCounter > 1){
+                        errMsg = "Il faut donner un nom correct aux noms de joueurs encadrés en rouge !";
+                    }
+                    else {
+                        errMsg = "Il faut donner un nom correct au nom du joueur encadré en rouge !";
+                    }
+                }
+                else if (!playerNamesErrorFlaf) {
+                    if (teamNamesErrorsCounter > 1){
+                        errMsg = "Il faut donner un nom correct aux noms d'équipes encadrés en rouge !";
+                    }
+                    else {
+                        errMsg = "Il faut donner un nom correct au nom de l'équipe encadré en rouge !";
+                    }
+                }
+                else {
+                    errMsg = "Il faut donner un nom correct aux noms de team(s) et de joueur(s) encadrés en rouge !";
+                }
+                backMessageSpan.innerHTML = errMsg;
+                return;
+            }
+             
+            // Get and store teams and players names if exist
+            if (dataHasTeams || dataHasPlayersPoints) {
+                teamsDivs = teamsDiv.childNodes;
+                data.teams = {};
+                var i;
+                for (i = 0; i < teamsDivs.length; i++) {                    
+                    // with .dataKey I want to be sure that the team_0 is the first team chosen
+                    var key = teamsDivs[i].dataKey;
+                    data.teams['team_' + i] = {};
+                    data.teams['team_' + i]['teamColor'] = teamsDivs[i].style.borderColor;
+
+
+                    var teamsDivIChilds = teamsDivs[i].childNodes;
+                    var playersCounter = 0;
+                    data.teams['team_' + i]['players'] = {};
+                    
+                    for (var j = 0; j < teamsDivIChilds.length; j++) {
+                        if (teamsDivIChilds[j].classList.contains('team-name-input')) {
+                                data.teams['team_' + i]['teamName'] = teamsDivIChilds[j].value;
+                        }
+
+
+                        if (teamsDivIChilds[j].classList.contains('player-input')) {
+                            //console.log('add player, counter : ' + playersCounter),
+                            //console.log('input player ' + j + ', value : ' + teamsDivIChilds[j].value);
+                                data.teams['team_' + i]['players']['player_' + playersCounter] = teamsDivIChilds[j].value;
+                                playersCounter++;
+                        }
+                    }
+                }
+            }
+            // store all other settings 
+            // here 'next' is the word we'll go to search in db to find it back once in admin or autoPlay page 
+            data.name = 'next';
+            data.hasTeams = dataHasTeams;
+            data.hasTeamsNames = dataHasTeamsNames;
+            data.hasPlayersPoints = dataHasPlayersPoints;
+            data.hasCountDown = dataHasCountDown;
+            data.countDownDuration = dataCountDownDuration;
+            data.hasHelp = dataHasHelp;
+            data.helpDuration = dataHelpDuration;
+            data.nbQuestions = dataNbQuestions;
+            data.hasRandomSongs = dataHasRandomSongs;
+            data.playlistId = dataPlaylistId;
+            data.hasRandomCategory = dataHasRandomCategory;
+            data.hasDisplayCategory = dataHasDisplayCategory;
+            data.hasMusic = dataCategories.hasMusic;
+            data.hasMovies = dataCategories.hasMovies;
+            data.hasCartoons = dataCategories.hasCartoons;
+            data.hasTvShows = dataCategories.hasTvShows;
+            // send data
+            sendDatas(data);
+        }
+
+
+
+        // send data with stringify method
+        function sendDatas (_data) {
+            //console.log(_data);
+            fetch('/config/json', {
+                method: 'POST',
+                body: JSON.stringify(_data),
+                headers:{
+                    "Content-Type": "Application/json"
+                }
+            })
+                .then( function(response){
+                   return response.json();
+                })
+                .then( function(response){
+                    if (response.reponse === 'ok') {
+                        console.log('fetch return, everything is fine !');
+                    }
+                    else {
+                        console.log(response);  
+                    }                
+                });
+        }
+
+
+
+            // store all settings 
+            //data.append('hasTeams', dataHasTeams);
+// !!!!!!!!!!!!!!!!!!!!!            ADD TEAM NAME WITH CHOICE
+            //data.append('hasPlayersPoints', dataHasPlayersPoints);
+            //data.append('hasCountDown', dataHasCountDown);
+            //data.append('countDownDuration', dataCountDownDuration);
+            //data.append('hasHelp', dataHasHelp);
+            //data.append('helpDuration', dataHelpDuration);
+            //data.append('nbQuestions', dataNbQuestions);
+            //data.append('hasRandomCategory', dataHasRandomCategory);
+            //data.append('hasDisplayCategory', dataHasDisplayCategory);
+            //for (var i = à; i < dataCategories.length; i++) {
+                // we should find : has_music, movies, cartoons and/or tvShows
+                //data.append('has_' + dataCategories[i][0], dataCategories[i][1]);
+            //}
+
+
+
+
+        // choose if needed teams and players names
+        //    function fillOutNamesIfNeeded() {
+        // console.log('nbr teams : ' + teamsNb.value);
+        // for (var i = 1; i <= teamsNb.value; i++) {
+        //     console.log('team nb : ' + i);
+        //     content += '<div id="team_' + i + '">';
+        //    content += '<input type="text" name="teamname[]" placeholder="Nom de l\'équipe">';
+        //    content += '</div>';
+        // }
+        //teamsContent.innerHTML = content;
+        //      if (document.querySelector('#has-team-true').checked === true) {
+        //           console.log('yes');
+        //       } else {
+        //           console.log('no');
+        //        }
+        //     }
+
+        // Add player
+        //    addPlayerBtn.addEventListener('click', function () {
+        ///        var errorFlag = false;
+        //        for (var i = 0; i < playersInputs.length; i++) {
+        //console.log(input);
+        //            if (playersInputs[i].value === "") {
+        //                errorFlag = true;
+        //                playersInputs[i].classList.add('error');
+        //               playerErrorSpan.classList.add('msg-error--show');
+        //           }
+        //       }
+        //       if (!errorFlag) {
+        //           playerListDiv.innerHTML +=
+        //               '<input type="text" class="playerName text-input" name="player[]">';
+        //       }
+        //   });
+
+
+        //var content = '';
+
+        // console.log('nbr teams : ' + teamsNb.value);
+        // for (var i = 1; i <= teamsNb.value; i++) {
+        //     console.log('team nb : ' + i);
+        //     content += '<div id="team_' + i + '">';
+        //    content += '<input type="text" name="teamname[]" placeholder="Nom de l\'équipe">';
+        //    content += '</div>';
+        // }
+        //teamsContent.innerHTML = content;
+
+        // Last choose kind of test
+
+
+// ************************************************************************
+        /*  
+            A faire :
+                _ player name: margin vertical
+                _ msg-error player names avec ou sans teams : modif couleur, taille et position quand affiché
+                _ bouton oups! : position fixe ?
+                _ affichage catégories responsive
+
+            bugs :
+                
+
+            questions : 
+                _ no teams but players : choix de couleru dess joueurs ?
+        */
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Richard Meuret">
+
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="public/assets/css/admin.css">
+</head>
+
+<body>
+
+    {% block content %}
+
+    <header>
+        <h1>Admin blind test</h1>
+    </header>
+
+    <main>
+
+
+
+        <!-- used to display teams scores -->
+        <section id="teams-score_section">
+
+            <div id="teams-score_div">
+            <!--    {{ config.has_teams }}
+                    {% for team in teams %}
+                    <div class="team_div" id="team-{{ team.id }}_div">
+                        <div class="team-name_div" data-teamid="{{ team.id }}">{{ team.name }}</div>
+                        <div class="team-score_div" id="score-team_{{ team.id }}" data-teamid={{ team.id }}>{{ team.score }}
+                        </div>
+                    </div>
+                    {% endfor %}
+            -->
+                {% if config.has_teams == 1 %}
+
+                {% block teamScore %}
+
+                {% for team in teams %}
+                <div class="team_div" id="team-{{ team.id }}_div">
+                    <div class="team-name_div" data-teamid="{{ team.id }}" style="color:{{ team.color }}">{{ team.name }}</div>
+                    <div class="team-score_div" id="score-team_{{ team.id }}" data-teamid={{ team.id }}>{{ team.score }}
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% endblock %}
+
+                {% endif %}
+            </div>
+        </section>
+
+
+
+
+
+        <!-- Infos about the pending / playing / played song -->
+        <section id="song_section">
+            <div id="song_div">
+                {% block songBox %}
+                <!-- songs infos -->
+                <div id="song-row">
+                    <div id="song-infos_div">
+                        <div id="song-infos-titles_div" class="song-information">
+                            <div id="song-title">Titre en cours : </div>
+                            <div class="song-info-value" id="song-title-value">{{ song.title }}</div>
+                        </div>
+                        <div id="song-infos-singer_div" class="song-information">
+                            <div id="song-singer">Interprète : </div>
+                            <div class="song-info-value" id="song-singer-value"> {{ song.singer }}</div>
+                        </div>
+                        <div id="song-infos-category_div" class="song-information">
+                            <div id="song-category">Catégorie : </div>
+                            <div class="song-info-value" id="song-category-value">{{ song.category }}</div>
+                        </div>
+                        <div id="song-infos-points_div" class="song-information">
+                            <div id="song-points">Nombre de points :</div>
+                            <div class="song-info-value" id="song-points-value">{{ song.points }}</div>
+                        </div>
+                    </div>
+                <!--    <div id="song-infos_div">
+                        <div id="song-infos-titles_div">
+                            <div id="song-title">Titre en cours : </div>
+                            <div id="song-singer">Interprète : </div>
+                            <div id="song-category">Catégorie : </div>
+                            <div id="song-points">Nombre de points :</div>
+                        </div>
+                        <div id="song-infos-values_div">
+                            <div id="song-title-value">{{ song.title }}</div>
+                            <div id="song-singer-value"> {{ song.singer }}</div>
+                            <div id="song-category-value">{{ song.category }}</div>
+                            <div id="song-points-value">{{ song.points }}</div>
+                        </div>
+                    </div>
+                -->
+
+                    <!-- here we'll fill this div with css background-image -->
+                    <div id="song-img_div" style="background-image: url(public/assets/img/{{ song.picture }})">
+                <!--        <img src="public/img/{{ song.picture }}" alt="Une photo de {{ song.singer }}"> -->
+                    </div>
+                </div>
+                <!-- the song player -->
+                <div id="music-player_div">
+
+                    <audio id="music-player" controls
+                        src="public/songs/{{ song.path }}{{ song.file}}.{{ song.extension }}">
+                        Ce navigateur ne supporte pas le lecteur audio.
+                    </audio>
+                </div>
+                <!-- the control for game page -->
+                <div id="control-game-page_div">
+                    <div>
+                        <button id="openTab">OUVRE ONGLET</button>
+                    </div>
+                    <div>
+                        <button id="send">ENVOIE MESSAGE</button>                        
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+            
+        </section>
+
+
+
+
+        <!-- used to display players scores -->
+        <section id="players-score_section">
+
+
+            <div id="players-score_div">
+                {% if config.has_players %}
+
+                {% block playersScore %}
+                {% for player in players %}
+                <div class="player_div" id="player-{{ player.id }}_div">
+                    <div class="player-name_div" data-teamid="{{ player.team_id }}" data-playerid={{ player.id }} style="color:{{ player.color }}">
+                        {{ player.name }}</div>
+                    <div class="player-score_div" id="score-player_{{ player.id }}" data-playerid={{ player.id }}>
+                        {{ player.score }}</div>
+                </div>
+                {% endfor %}
+                {% endblock %}
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+
+
+    {% block script %}
+    <script>
+        // for the post.message
+		// receiver page
+        var domain = 'http://localhost:8080';        
+        var mainPage = '';
+        // the message sent to the players page
+        var message = {};
+        // open the player page in a new tab
+        mainPage = window.open(domain + '/play', '');
+
+
+        // VOIR POUR REMPLACER PAR UN SET TIME OUT
+        /* setTimeout( function(){ laFonctionALancer()}, 3000);
+        */
+       // window.onload = function () { 
+           // mainPage = window.open(domain + '/play', '');
+           // console.log('lancement de la page');
+        // };
+/*		document.getElementById('openTab').addEventListener('click', function () {
+			mainPage = window.open(domain + '/play', '');
+        }, false);
+*/
+       // setTimeout( function(){ laFonctionALancer()}, 3000);
+
+       // function laFonctionALancer() {
+         //   mainPage = window.open(domain + '/play', '');
+       // }
+
+       
+       var teamNameDivs = document.querySelectorAll('.team-name_div');
+       var teamScoreDivs = document.querySelectorAll('.team-score_div');
+       
+       var playerNameDivs = document.querySelectorAll('.player-name_div');
+       var playerScoreDivs = document.querySelectorAll('.player-score_div');
+
+       var songSection = document.querySelector('#song_section');
+        // the div to display songs infos
+        var songImgDiv = document.querySelector('#song-img_div');
+      //  songImgDiv.style.backgroundImage = 'url("../img/{{ song.picture }}")';
+
+
+        // we have teams 
+        var hasTeams = {{ config.has_teams | json_encode | raw }};
+        var hasPlayers = {{ config.has_players | json_encode | raw }};
+        
+   //   console.log({{ config.hasTeams }});
+        
+
+        /* ############# beginning of the game, send infos to the player page ############## */
+        
+        // wait 5 seconds before sending infos
+        setTimeout( function(){ giveAllNeededInfosToPlayerPage()}, 5000);
+
+        function giveAllNeededInfosToPlayerPage() {
+            if (hasTeams) {
+                message.purpose = 'teams';
+                message.teams = {};
+                for (let i = 0; i < teamNameDivs.length; i++) {
+                    message.teams[i] = {
+                        'id': teamNameDivs[i].getAttribute('data-teamid'),
+                        'name': teamNameDivs[i].innerHTML,
+                        'color': teamNameDivs[i].style.color
+                    }
+                }
+                mainPage.postMessage(message, domain);
+            }
+            
+            if (hasPlayers) {
+                message.purpose = 'players';
+                message.players = {};
+                for (let i = 0; i < playerNameDivs.length; i++) {
+                    message.players[i] = {
+                        'id': playerNameDivs[i].getAttribute('data-playerid'),
+                        'name': playerNameDivs[i].innerHTML,
+                        'color': playerNameDivs[i].style.color
+                    }
+                }
+                mainPage.postMessage(message, domain);
+            }
+        }
+
+        
+
+
+
+        /* #############  give points ############## */
+
+        
+        // give points to a team
+        // prepare and send message if a team name is clicked
+        if (hasTeams && !hasPlayers) {
+            // team names are buttons to add score
+            for (let i = 0; i < teamNameDivs.length; i++) {
+                teamNameDivs[i].addEventListener('click', function () {
+                    // add song points 
+                    let teamId = event.target.getAttribute('data-teamid');
+                    let teamScoreDiv = document.querySelector('#score-team_' + teamId);
+                    let teamScore = teamScoreDiv.innerHTML;
+                    let songPoints = document.querySelector('#song-points-value').innerHTML;
+                    teamScoreDiv.innerHTML = parseInt(teamScore) + parseInt(songPoints);
+                    // sort the teams div
+                    sortScoreDiv('team');
+
+                    // the message
+                    var message = {};
+                    message.purpose = 'team';
+                    message.teamId = teamId;
+                    message.points = songPoints;
+                    // send the message
+                    mainPage.postMessage(message, domain);
+
+                    // next question 
+                    askForNewSong();
+                });
+            }
+        }
+        // give points to a player (and to his team if exists)
+        // prepare and send message if a player name is clicked (one for player and one for player's team if needed)
+        if (hasPlayers) {
+            for (let i = 0; i < playerNameDivs.length; i++) {
+                // players names are buttons to add score
+                playerNameDivs[i].addEventListener('click', function () {
+                    let playerId = event.target.getAttribute('data-playerid');
+                    let playerScoreDiv = document.querySelector('#score-player_' + playerId);
+                    let playerScore = playerScoreDiv.innerHTML;
+                    let songPoints = document.querySelector('#song-points-value').innerHTML;
+                    playerScoreDiv.innerHTML = parseInt(playerScore) + parseInt(songPoints);
+                    // sort the players div
+                    sortScoreDiv('player');
+
+                    // the message
+                    var message = {};
+                    message.purpose = 'player';
+                    message.playerId = playerId;
+                    message.points = songPoints;
+                    // send the message
+                    mainPage.postMessage(message, domain);
+
+                    // this player has a team, give it points too
+                    if (hasTeams) {
+                        let teamId = event.target.getAttribute('data-teamid');
+                        let teamScoreDiv = document.querySelector('#score-team_' + teamId);
+                        let teamScore = teamScoreDiv.innerHTML;
+                        let songPoints = document.querySelector('#song-points-value').innerHTML;
+                        teamScoreDiv.innerHTML = parseInt(teamScore) + parseInt(songPoints);
+                        // sort the team div
+                        sortScoreDiv('team');
+
+                        // the message
+                        var message = {};
+                        message.purpose = 'team';
+                        message.teamId = teamId;
+                        message.points = songPoints;
+                        // send the message
+                        mainPage.postMessage(message, domain);
+
+                        // ICI AJOUTER LE POST MESSAGE VERS LA GAME PAGE
+                   /*     var message = {
+                                            'response': 'teams',
+                                            'nbrTeams': 2,
+                                            'teams': {
+                                                'team_1':{
+                                                            'name': 'teamName1',
+                                                            'id': '25',
+                                                            'score': 5
+                                                        },
+                                                'team_2':{
+                                                            'name': 'teamName2',
+                                                            'id': '27',
+                                                            'score': 3
+                                                        }
+                                            }
+                        };
+                        Object.keys(message.teams).forEach(function(k){
+                            console.log(k + ' - ' + message.teams[k]['name'] + '<br>');
+                        });
+                   */
+                        /*     for (var team in message.teams) {
+                            
+                                console.log('team name :' + team.name + '  euluihuh <br>');
+                        }
+                    */
+                      //  console.log (message.teams[1].name);
+                        // We can send objects with postMessage()
+                     //   mainPage.postMessage(JSON.stringify(message), domain); //sending the message
+                     //  mainPage.postMessage(message, domain); //sending the message
+                    }
+
+                    // next song
+                    askForNewSong();
+                });
+            }
+        }
+
+
+
+        // Sort the scores divs
+        // param : the div to sort ;)
+        function sortScoreDiv(sideToSort) {
+            var sideScoreDiv = document.querySelectorAll('.' + sideToSort + '-score_div');
+            var scoresById = [];
+            for (i = 0; i < sideScoreDiv.length; i++) {
+        //        console.log(sideScoreDiv[i]);
+                let scoreByIdForThis = {
+                                        id: sideScoreDiv[i].getAttribute('data-' + sideToSort + 'id'),
+                                        score: sideScoreDiv[i].innerHTML
+                }
+                scoresById.push(scoreByIdForThis);
+            }
+        //    console.log(scoresById);
+            // use slice() to copy the array and not just make a reference
+            var sortedByScore = scoresById.slice(0);
+            sortedByScore.sort(function(a,b) {
+                return b.score - a.score;
+            });
+        //    console.log(sortedByScore[0].score);
+        //    console.log(sortedByScore[0].id);
+        //    var divToSort = document.querySelector('#' + sideToSort + 's-score_div');
+            for (i = 0; i < sortedByScore.length; i++) {
+                let thisDiv = document.querySelector('#' + sideToSort + '-' + sortedByScore[i].id + '_div');
+                // adding - in front of score so that it will be first in order
+                // I could have used flex-direction:column-reverse in css, but more fun like that ;)
+                thisDiv.style.order = '-' + sortedByScore[i].score; 
+            }
+            
+
+         /*   var byDate = arrayOfObjects.slice(0);
+            byDate.sort(function(a,b) {
+                return a.born - b.born;
+            });
+            console.log('by date:');
+            console.log(byDate);
+        */
+            /* on loop à travers les scores en les poussant dans un objet avec leur id 
+                ( + id team si players (avec hasteams et hasplayers true) )
+                ensuite on ordonne l'array (ou l'objet) selon score DESC
+                reste plus qu'à changer l'ordre des div avec leur id (#) (qui inclu l'id bdd)
+                on pourrait pour les déplacer modifier leur classe, 
+                cette classe pourrait inclure un numéro correspondant à la position de la div dans l'array,
+                le css de ces classes gérant une chouette animation de mouvement vers sa propre position
+
+                utiliser un order sur une flexbox
+                https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Ordering_Flex_Items
+
+                
+            */
+        }
+
+        // we need the next song
+        function askForNewSong() {
+          //  fetch('/admin/next_song/{{ config.playlist_id | json_encode | raw }}')
+            playlistId = {{ config.playlist_id }};
+          //  console.log('playlistId: ' + playlistId);
+            fetch('/admin/next_song/' + playlistId)
+            // then se lance si retour
+            // reponse : ma variable
+            .then( function(response){
+                // .json() : type de réponse pour récup un objet en json plutôt que du texte (on peut tester avec .text() pour voir)
+                return response.json();
+            })
+            .then( function(response){
+                // le html arrive en retour, on l'affiche dans body
+                console.log(response.render);
+                
+              songSection.innerHTML = response.render;
+            })
+            // ici on gère les erreurs si mauvais retour ou erreur dans url, bref si erreur
+            .catch( function (error){
+                // pour voir différentes erreurs, on peu modif l'url dans fetch()
+                console.log('erreur demande next song: ' + error.message);
+            });
+        }
+        
+    </script>
+    {% endblock %}
+
+
+    {% endblock %}
+
+</body>
+
+</html>

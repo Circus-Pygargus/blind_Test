@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="author" content="Dennis Gabil" />
+	<meta name="description"
+		content="A brief tutorial on the window.postMessage() method, which gives a provision for sending cross-domain data messages between two browser windows safely." />
+	<meta name="date" content="05-05-2017" />
+	<meta name="keywords"
+		content="window postmessage, postmessage, javascript postmessage, web messaging, postmessage javascript, html5 postmessage, iframe cross domain, window msg, javascript cross domain, cross domain javascript" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<meta property="og:url" content="https://scriptverse.academy/tutorials/html5-window-postmessage.html" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="HTML5 window.postMessage() - ScriptVerse" />
+	<meta property="og:image" content="https://scriptverse.academy/img/thumbnails/html5.png" />
+	<meta property="og:site_name" content="ScriptVerse" />
+	<meta property="og:description"
+		content="A brief tutorial on the window.postMessage() method, which gives a provision for sending cross-domain data messages between two browser windows safely." />
+
+	<title>HTML5 window.postMessage() - ScriptVerse</title>
+
+
+</head>
+
+<body>
+	<header>
+	</header>
+
+
+
+	<section>
+		<h2>Admin page</h2>
+
+		<pre>
+                    Ici, la page admin.
+                Un clic sur le bouton 'OUVRE ONGLET' ouvre la page sur laquelle les donneées seront envoyées.
+                Un clic sur le bouton 'ENVOIE MESSAGE' enverra les données vers la page ouverte par le bouton précédent.
+				</pre>
+
+		<p>
+			<button id="openTab">OUVRE ONGLET</button> <button id="send">ENVOIE MESSAGE</button>
+		</p>
+
+	</section>
+
+	<footer></footer>
+
+	<script>
+		// receiver page
+		var domain = 'http://localhost:8080';
+		var mainPage = '';
+		
+		var message = [
+						'rouge',
+						'bleu', 
+						'vert'
+		]
+
+
+		document.getElementById('openTab').addEventListener('click', function () {
+
+			mainPage = window.open(domain + '/page1_main', '');
+		}, false);
+
+
+		//message sender
+		document.getElementById('send').addEventListener("click", function (e) {
+			//var message = "Mon message envoyé depuis la page d'admin";
+			// We can send objects with postMessage()
+			mainPage.postMessage(message, domain); //sending the message
+		}, false);
+	</script>
+
+</body>
+
+</html>
