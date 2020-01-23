@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body,
+button {
+    font-family: 'Shadows Into Light', cursive;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    background-color: #020202;
+    color: #f5f5f5;
+
+    header {
+        display: flex;
+        justify-content: center;
+        /* height: 20vh; */
+
+        h1 {
+            color: #f5f5f5;
+            font-size: 5rem;
+            text-align: center;
+            margin: 20px 0 0 0;
+        }
+    }
+
+    main {
+
+        #inline-sections_div {
+            display: flex;
+            justify-content: space-between;
+
+            section#song_section {
+                width: 60%;
+                padding-top: 50px;
+
+                #song_div {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    // display: flex;
+                    // flex-wrap: wrap;
+                    // justify-content: space-evenly;
+                    font-size: 1.5rem;
+
+                    #song-row {
+                        display: flex;
+                        justify-content: space-around;
+
+                        #song-infos_div {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-around;
+
+                            .song-information {
+                                display: flex;
+                                justify-content: space-between;
+
+                                .song-info-value {
+                                    text-align: center;
+                                }
+                            }
+                        /*
+                            #song-infos-titles_div,
+                            #song-infos-values_div {
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                            }
+
+                            #song-infos-values_div {
+                                align-items: center;
+                            }
+                            */
+                        }
+
+                        #song-img_div {
+                            width: 150px;
+                            height: 150px;
+                            background-image: url("../img/mr_machrichard.jpg");
+                            background-position: center;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                        }
+                    }
+                }
+            }
+
+            #teams-score_section {
+                padding-left: 35px;
+            }
+            #players-score_section {
+                padding-right: 35px;
+            }
+
+            #teams-score_section,
+            #players-score_section {
+                display: inline-block;
+                // width: 250px;
+                margin-top: 35px;
+
+                #teams-score_div,
+                #players-score_div {
+                    display: flex;
+                    flex-direction: column;
+                    transition       : all 1.5s ease-in-out;
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                    border: 1px solid white;
+                    // border-radius: 10% / 50%;
+                    // border-top-left-radius: 10% 50%;
+                    // border-top-right-radius: 10% 10%;
+                    border-radius: 35px;
+                    
+
+                    .team_div,
+                    .player_div {
+                        display: flex;
+                        justify-content: space-between;
+                        transition       : all 1.5s ease-in-out; 
+
+                        .team-name_div {
+                            cursor: pointer; 
+                            text-align: right;
+                            font-size: 2rem;
+                            padding-left: 15px;  
+                        }
+
+                        .player-name_div {
+                            cursor: pointer;
+                            text-align: left;
+                            font-size: 2rem;
+                            padding-right: 15px;
+                        }
+                        
+                        .team-score_div,
+                        .player-score_div {
+                            text-align: center;
+                            font-size: 2rem;
+                        } 
+
+                        .team-name_div,
+                        .player-name_div {
+                            min-width: 200px;
+                        }
+
+                        .team-score_div,
+                        .player-score_div {
+                            width: 50px;
+                            padding-left: 15px;        
+                            padding-right: 15px;
+                        }
+                    }
+                    .player_div {
+                        flex-direction: row-reverse;
+                    }
+                }
+            }
+        }
+
+        #control-game-page_section {
+            display: block;
+            width: 600px;
+            margin: auto;
+
+            #control-game-page_div {
+                display: flex;
+                flex-direction: column;
+                // justify-content: center;
+                
+                    .control_button {
+                        width: 150px;
+                        height: 50px;
+                        background-color: #f5f5f5;
+                        color: #020202;
+                        border-radius: 15px;
+                        margin-top: 15px;
+                        font-size: 1.2rem;
+                    }
+
+
+                #send-response-div {
+                    display: flex;
+                    justify-content: space-between;
+                    // #send-picture_button {
+                    //     margin-left: 100px;
+                    //     margin-right: 30px;
+                    // }
+                }
+
+                #music-player_div {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 30px;
+                }
+
+                #ask-for-next-song_button {
+                    display: block;
+                    margin: auto;
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+}

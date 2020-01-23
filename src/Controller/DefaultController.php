@@ -17,10 +17,6 @@ class DefaultController extends Controller {
 
 
     function index () {
-        // $db = new DatabaseConfig();
-        // $db->connect();
-        // var_dump($db->db);
-        
         return $this->twig->render('index.html.twig');
     }
 

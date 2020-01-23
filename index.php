@@ -15,16 +15,19 @@ $router->map('GET',  '/config',             array('c' => 'ConfigController',   '
 $router->map('GET',  '/config/playlists',   array('c' => 'ConfigController',   'a' => 'playlists'));
 $router->map('POST', '/config/json',        array('c' => 'ConfigController',   'a' => 'json'));
 $router->map('GET',  '/admin',              array('c' => 'AdminController',    'a' => 'index'));
+$router->map('GET',  '/admin/end_game',     array('c' => 'AdminController',    'a' => 'endGame'));
 //$router->map('GET',  '/admin/next-song',              array('c' => 'AdminController',    'a' => 'nextSong'));
-$router->map('GET',  '/play',              array('c' => 'PlayController',    'a' => 'index'));
-$router->map('GET',  '/page2_admin',              array('c' => 'TestController',    'a' => 'admin'));
-$router->map('GET',  '/page1_main',              array('c' => 'TestController',    'a' => 'main'));
+$router->map('GET',  '/play',               array('c' => 'PlayController',    'a' => 'index'));
+$router->map('GET',  '/page2_admin',        array('c' => 'TestController',    'a' => 'admin'));
+$router->map('GET',  '/page1_main',         array('c' => 'TestController',    'a' => 'main'));
 //$router->map('GET', '/.')
 //$router->map('GET',  '/admin/next_song',    array('c' => 'AdminController',    'a' => 'nextSong'));
 
 // on passe par altorouter::addMatchTypes() pour check la variable d'url avec la regex 
- $router->addMatchTypes(array('playlist_id' => '[0-9]{1,11}'));
- $router->map('GET', '/admin/next_song/[i:playlist_id]', array('c' => 'AdminController',    'a' => 'nextSong'));
+ //$router->addMatchTypes(array('playlist_id' => '[0-9]{1,11}'));
+$router->addMatchTypes(array('playlist_id' => '[0-9]{1,11}',
+                                'played_songs' => '[0-9]{1,11}')); 
+ $router->map('GET', '/admin/next_song/[i:playlist_id]/[i:played_songs]', array('c' => 'AdminController',    'a' => 'nextSong'));
 
 
 $match = $router->match();
@@ -40,7 +43,7 @@ $object = new $controller();
     $print = $object->{$action}();
  }
  else {
-     $print = $object->{$action}($match['params']);
+    $print = $object->{$action}($match['params']);
  }
 
 echo $print;

@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Display help and results</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="public/assets/css/game.css">
+
 </head>
 <body>
-    <header>
+   <!-- <header>
         <h1>blind test</h1>
     </header>
-
+-->
     <main>    
         <!-- used to display teams scores -->
         <section id="teams-score_section">
-
+            <div id="teams-score_title">&Eacute;quipes</div>
             <div id="teams-score_div"></div> 
 
         </section>
@@ -29,6 +33,14 @@
                 <!-- songs infos -->
                 <div id="song-row">
                     <div id="song-infos_div">
+                      <!--  <div id="song-infos-category_div" class="song-information">
+                            <div id="song-category">Catégorie : </div>
+                            <div class="song-info-value" id="song-category-value"></div>
+                        </div>
+                        <div id="song-infos-points_div" class="song-information">
+                            <div id="song-points">Nombre de points :</div>
+                            <div class="song-info-value" id="song-points-value"></div>
+                        </div>
                         <div id="song-infos-titles_div" class="song-information">
                             <div id="song-title">Titre en cours : </div>
                             <div class="song-info-value" id="song-title-value">{{ song.title }}</div>
@@ -37,51 +49,16 @@
                             <div id="song-singer">Interprète : </div>
                             <div class="song-info-value" id="song-singer-value"> {{ song.singer }}</div>
                         </div>
-                        <div id="song-infos-category_div" class="song-information">
-                            <div id="song-category">Catégorie : </div>
-                            <div class="song-info-value" id="song-category-value">{{ song.category }}</div>
-                        </div>
-                        <div id="song-infos-points_div" class="song-information">
-                            <div id="song-points">Nombre de points :</div>
-                            <div class="song-info-value" id="song-points-value">{{ song.points }}</div>
-                        </div>
+                        -->
                     </div>
-                <!--    <div id="song-infos_div">
-                        <div id="song-infos-titles_div">
-                            <div id="song-title">Titre en cours : </div>
-                            <div id="song-singer">Interprète : </div>
-                            <div id="song-category">Catégorie : </div>
-                            <div id="song-points">Nombre de points :</div>
-                        </div>
-                        <div id="song-infos-values_div">
-                            <div id="song-title-value">{{ song.title }}</div>
-                            <div id="song-singer-value"> {{ song.singer }}</div>
-                            <div id="song-category-value">{{ song.category }}</div>
-                            <div id="song-points-value">{{ song.points }}</div>
-                        </div>
-                    </div>
-                -->
-
+                    
+                    
                     <!-- here we'll fill this div with css background-image -->
+                    <div id="song-infos-solution_div" class="song-information">
+                        <div class="song-info-value" id="song-solution-value"></div>
+                    </div>
                     <div id="song-img_div" style="background-image: url(public/assets/img/{{ song.picture }})">
                 <!--        <img src="public/img/{{ song.picture }}" alt="Une photo de {{ song.singer }}"> -->
-                    </div>
-                </div>
-                <!-- the song player -->
-                <div id="music-player_div">
-
-                    <audio id="music-player" controls
-                        src="public/songs/{{ song.path }}{{ song.file}}.{{ song.extension }}">
-                        Ce navigateur ne supporte pas le lecteur audio.
-                    </audio>
-                </div>
-                <!-- the control for game page -->
-                <div id="control-game-page_div">
-                    <div>
-                        <button id="openTab">OUVRE ONGLET</button>
-                    </div>
-                    <div>
-                        <button id="send">ENVOIE MESSAGE</button>                        
                     </div>
                 </div>
             </div>
@@ -92,64 +69,66 @@
 
         <!-- used to display players scores -->
         <section id="players-score_section">
-
-
-            <div id="players-score_div">
-           <!--     {% if config.has_players %}
-
-                {% block playersScore %}
-                {% for player in players %} 
-            -->
-                <div class="player_div" id="player-{{ player.id }}_div">
-                    <div class="player-name_div" data-teamid="{{ player.team_id }}" data-playerid={{ player.id }} style="color:{{ player.color }}">
-                        {{ player.name }}</div>
-                    <div class="player-score_div" id="score-player_{{ player.id }}" data-playerid={{ player.id }}>
-                        {{ player.score }}</div>
-                </div>
-             <!--     {% endfor %}
-                {% endblock %}
-                {% endif %}
-             -->
-            </div>
+            <div id="players-score_title">Joueurs</div>
+            <div id="players-score_div"></div>
         </section>
     </main>
+
+
 
     <script>
         var teamsDivs = document.querySelector('#teams-score_div');
         var playersDiv = document.querySelector('#players-score_div');
+        var categoryDiv = document.querySelector('#song-category-value');
+        var songPointsDiv = document.querySelector('#song-points-value');
+        var songPictureDiv = document.querySelector('#song-img_div');
+        var songSolutionDiv = document.querySelector('#song-solution-value');
 
         // waiting for the message from admin page
         window.addEventListener('message', function(e) {	
         var origin = e.origin;
-        // Adding this line protect from code injection ;)
-        if( origin !== 'http://localhost:8080')	return;
+            // Adding this line protect from code injection ;)
+            if( origin !== 'http://localhost:8080')	return;
 
-        console.log('response : ' + e.data.purpose + '<br');
+            console.log('response : ' + e.data.purpose + '<br');
 
-        switch (e.data.purpose) {
+            switch (e.data.purpose) {
 
-            case 'player':
-                pointsForAPlayer(e.data);
-                break;
-            case 'team':
-                pointsForATeam(e.data);
-                break;
-            case 'category':
-                break;
-            case 'singer':
-                break;
-            case 'picture':
-                break;
-            case 'category':
-                break;
-            case 'teams':
-                buildTeamsDiv(e.data);
-                break;
-            case 'players': 
-                buildPlayersDiv(e.data);
-                break;
-        }
-            
+                case 'player':
+                    pointsForAPlayer(e.data);
+                    break;
+                case 'team':
+                    pointsForATeam(e.data);
+                    break;
+                case 'category':
+                    displayCategory(e.data);
+                    break;
+                case 'points':
+                    displaySongPoints(e.data);
+                    break;
+                case 'picture':
+                    displaySongPicture(e.data);
+                // style="background-image: url(public/assets/img/{{ song.picture }})
+                    break;  
+                case 'solution': 
+                    displaySongSolution(e.data);
+                    break;
+                case 'singer':
+                    break;
+                case 'clean': 
+                    cleanLastSongInfos(e.data);
+                    break;
+                case 'teams':
+                    buildTeamsDiv(e.data);
+                    break;
+                case 'players': 
+                    buildPlayersDiv(e.data);
+                    break;
+                case 'end':
+                    endGame(e.data);
+                    break;
+            }
+
 
          /*   document.getElementsByTagName('p')[0].innerHTML = 'Message from admin page :  ' + e.data;
             document.getElementsByTagName('p')[0].innerHTML += 'Message from admin page :  ' + e.data.response;
@@ -171,7 +150,7 @@
 
             console.log( 'this player (' + data.playerId + ') just won ' + data.points + ' ppoint(s)' );
             // we need to sort the score div
-            sortScoreDiv('players');
+            sortScoreDiv('player');
         }
         // a team has won this song
         function pointsForATeam (data) {
@@ -180,18 +159,69 @@
             teamScoreDiv.innerHTML = parseInt(teamScore) + parseInt(data.points);
             console.log( 'this team (' + data.teamId + ') just won ' + data.points + ' ppoint(s)' );
             // we need to sort the score div
-            sortScoreDiv('teams');
+            sortScoreDiv('team');
         }
 
+        // display category
+        function displayCategory (data) {
+           // console.log('data.song.category : ' + data.category);
+           // UNCOMMENT AS SOON AS USED AGAIN
+           // categoryDiv.innerHTML = data.category;
+        }
+
+        // display the number of points for this song
+        function displaySongPoints (data) {
+            console.log('data.song.points : ' + data.points);
+            /* UNCOMMENT THIS AS SOON AS WE USE DIFFERENTS POINTS ACCORDING TO SONG DIFFICULTY
+            songPointsDiv.innerHTML = data.points;
+            */
+        }
+
+        // display the song picture 
+        function displaySongPicture (data) {
+            console.log('song picture : ' + data.picture);
+            if (data.picture !== '') {
+                songPictureDiv.style.backgroundImage = 'url(public/assets/img/' + data.picture + ')';
+            } else {
+                songPictureDiv.style.backgroundImage = 'none';
+            }
+        }
+
+        // display the song solution
+        function displaySongSolution (data) {
+            console.log('song solution : ' + data.solution);
+            songSolutionDiv.innerHTML = data.solution;
+        }
+
+        // remove last song infos
+        function cleanLastSongInfos () {
+          //  categoryDiv.innerHTML = '';
+         //   songPointsDiv.innerHTML ='';
+          //  songPictureDiv.style.backgroundImage = '';
+          //  songSolutionDiv.innerHTML = '';
+          data = {};
+          data.picture = '';
+          displaySongPicture(data);
+          data.solution = '';
+          displaySongSolution(data);
+        }
+
+        // end of the game 
+        function endGame (data) {
+            songSolutionDiv.innerHTML = data.end;
+        }
 
         // teams has arrived by postMessage() from admin page
         function buildTeamsDiv (data) {
-            
+
+            console.log(data);
+            console.log('dataaaaaaaaaaaa : ' + data.teams[0].id);
+            console.log(data);
             Object.keys(data.teams).forEach(function(k){
 
                 var teamDiv = document.createElement('div');
                 teamDiv.id = 'team-' + data.teams[k]['id'] + '_div';
-                teamDiv.classList.add('team-div');
+                teamDiv.classList.add('team_div');
                 teamsDivs.appendChild(teamDiv);
 
                 var teamNameDiv = document.createElement('div');
@@ -224,8 +254,8 @@
             Object.keys(data.players).forEach(function(k){
 
                 var playerDiv = document.createElement('div');
-                playerDiv.id = 'team-' + data.players[k]['id'] + '_div';
-                playerDiv.classList.add('player-div');
+                playerDiv.id = 'player-' + data.players[k]['id'] + '_div';
+                playerDiv.classList.add('player_div');
                 playersDiv.appendChild(playerDiv);
 
                 var playerNameDiv = document.createElement('div');
@@ -256,11 +286,13 @@
 
             console.log(groupToSort);
             var divToSort = document.querySelectorAll('.' + groupToSort + '-score_div');
+          //  <div id="teams-score_div"></div> 
+           // <div id="players-score_div"></div>
             console.log('divToSort ' + divToSort);
             var scoresById = [];
 
             for (let i = 0; i < divToSort.length; i++) {
-
+                console.log('id : ' + divToSort[i].getAttribute('data-' + groupToSort + 'id'));
                 let scoreByIdForThis = {
                                         id: divToSort[i].getAttribute('data-' + groupToSort + 'id'),
                                         score: divToSort[i].innerHTML
@@ -280,11 +312,16 @@
 
             for (i = 0; i < sortedByScore.length; i++) {
 
+                console.log('-' + sortedByScore[i].id);
                 let thisDiv = document.querySelector('#' + groupToSort + '-' + sortedByScore[i].id + '_div');
                 thisDiv.style.order = '-' + sortedByScore[i].score; 
+                console.log(thisDiv);
             }
         }
             
+      //  teamDiv.id = 'team-' + data.teams[k]['id'] + '_div';
+
+      //  playerDiv.id = 'player-' + data.players[k]['id'] + '_div';
    
     </script>
     

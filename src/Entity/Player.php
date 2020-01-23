@@ -233,8 +233,8 @@ class Player extends Database
      */
     public function add (string $name, string $color, int $score, bool $hasTeam, string $teamName)
     {
-        echo 'player has team : ';
-        var_dump($hasTeam);
+        //echo 'player has team : ';
+        //var_dump($hasTeam);
       
         $sql = "INSERT INTO players(name, color, score, team_name, has_team  )
                 VALUES (:name, :color, :score, :team_name, :has_team )";

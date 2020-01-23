@@ -50,10 +50,8 @@ class Database extends DatabaseConfig
     
 
     protected function fetch ():array
-    {        
-        
+    {
+
         return $this->sth->fetch(\PDO::FETCH_ASSOC);
     }
-
-
 }

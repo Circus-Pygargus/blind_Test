@@ -6,7 +6,8 @@
 
 body,
 button {
-    font-family: 'Shadows Into Light', cursive;
+    // font-family: 'Shadows Into Light', cursive;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -47,10 +48,12 @@ body {
 
                 #song-row {
                     display: flex;
+                    flex-direction: column;
                     justify-content: space-between;
 
                     #song-infos_div {
                         display: flex;
+                        flex-direction: column;
                         justify-content: space-around;
 
                         #song-infos-titles_div,
@@ -63,15 +66,24 @@ body {
                         #song-infos-values_div {
                             align-items: center;
                         }
+                    } 
+
+                    #song-infos-solution_div {
+                        text-align: center;
+                        height: 90px;
+                        font-size: 4rem;
+                        margin-top:50px;
+                        margin-bottom: 75px;
                     }
 
                     #song-img_div {
-                        width: 300px;
-                        height: 300px;
+                        width: 500px;
+                        height: 500px;
                         background-image: url("../img/mr_machrichard.jpg");
                         background-position: center;
                         background-size: contain;
                         background-repeat: no-repeat;
+                        align-self: center; 
                     }
                 }
 
@@ -83,15 +95,55 @@ body {
             }
         }
 
+        
+
+        #teams-score_section {
+            padding-left: 35px;
+        }
+        #players-score_section {
+            padding-right: 35px;
+        }
+
         #teams-score_section,
         #players-score_section {
             display: inline-block;
-            width: 250px;
+            // width: 350px;
+            margin-top: 35px;
+
+            #teams-score_title,
+            #players-score_title {
+                color: white;
+                font-size: 3rem;
+                text-align: center;
+                padding-top: 20px;
+                border: 1px solid white;
+                // border-radius: 10% / 50%;
+                // border-top-left-radius: 10% 50%;
+                // border-top-right-radius: 10% 10%;
+                border-top-left-radius: 35px 35px;
+                border-top-right-radius: 35px 35px;
+                
+                border-bottom: none;
+            }
+
+            
+            // #teams-score_div {
+            // }
+            // #players-score_div {
+            // }
 
             #teams-score_div,
             #players-score_div {
                 display: flex;
                 flex-direction: column;
+                padding-top: 10%;
+                padding-bottom: 20px;
+                border: 1px solid white;
+                // border-radius: 10% / 50%;
+                border-bottom-left-radius: 35px 35px;
+                border-bottom-right-radius: 35px 35px;
+                
+                border-top: none;
 
                 .team_div,
                 .player_div {
@@ -99,18 +151,24 @@ body {
                     justify-content: space-between;
 
                     .team-name_div {
-                        cursor: pointer;
+                        // cursor: pointer;
                         text-align: right;
-                        font-size: 2rem;
+                        font-size: 2.65rem;
+                        padding-left: 15px;
+                        // padding-right: 15px;
                     }
 
                     .player-name_div {
-                        cursor: pointer;
+                        // cursor: pointer;
                         text-align: left;
-                        font-size: 2rem;
+                        font-size: 2rem;  
+                        padding-right: 15px;
                     }
                     
-                    .team-score_div,
+                    .team-score_div {
+                        text-align: center;
+                        font-size: 2.65rem;
+                    }
                     .player-score_div {
                         text-align: center;
                         font-size: 2rem;
@@ -118,12 +176,14 @@ body {
 
                     .team-name_div,
                     .player-name_div {
-                        width: 200px;
+                        min-width: 265px;
                     }
 
                     .team-score_div,
                     .player-score_div {
                         width: 50px;
+                        padding-left: 15px;
+                        padding-right: 15px;
                     }
                 }
                 .player_div {

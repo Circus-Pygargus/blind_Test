@@ -14,7 +14,7 @@ class DatabaseConfig {
 
     private function config () {
         // chargement de phpdotenv
-        $dotenv = \Dotenv\Dotenv::create($_SERVER["DOCUMENT_ROOT"] . "/src");
+        $dotenv = Dotenv::create($_SERVER["DOCUMENT_ROOT"] . "/src");
         $dotenv->load();
         
 

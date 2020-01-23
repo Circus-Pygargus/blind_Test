@@ -606,7 +606,7 @@ class GameConfig extends Database
 
 
 
-    /* ######################## SQL ######################## */
+    /* ######################## SQL REQUESTS ######################## */
 
 
     /**
@@ -633,27 +633,26 @@ class GameConfig extends Database
         $this->prepare($sql);
         $this->bindParam(':name', $name, \PDO::PARAM_STR);
         $this->bindParam(':has_teams', $hasTeams, \PDO::PARAM_INT);
-        
-         $this->bindParam(':has_teams_names', $hasTeamsNames, \PDO::PARAM_INT);
-         $this->bindParam(':teams', $teamsIds, \PDO::PARAM_STR);
-         $this->bindParam(':teams_nbr', $teamsNbr, \PDO::PARAM_INT);
-         $this->bindParam(':has_players', $hasPlayers, \PDO::PARAM_INT);
-         $this->bindParam(':players_nbr', $playersNbr, \PDO::PARAM_INT);
-         $this->bindParam(':players', $playersIds, \PDO::PARAM_STR);
-         $this->bindParam(':has_count_down', $hasCountDown, \PDO::PARAM_INT);
-         $this->bindParam(':count_down_duration', $countDownDuration, \PDO::PARAM_INT);
-         $this->bindParam(':has_help', $hasHelp, \PDO::PARAM_INT);
-         $this->bindParam(':help_duration', $helpDuration, \PDO::PARAM_INT);
-         $this->bindParam(':nb_questions', $nbQuestions, \PDO::PARAM_INT);
-         $this->bindParam(':has_random_songs', $hasRandomSongs, \PDO::PARAM_INT);
-          $this->bindParam(':playlist_id', $playlistId, \PDO::PARAM_INT);
-         $this->bindParam(':has_random_category', $hasRandomCategory, \PDO::PARAM_INT);
+        $this->bindParam(':has_teams_names', $hasTeamsNames, \PDO::PARAM_INT);
+        $this->bindParam(':teams', $teamsIds, \PDO::PARAM_STR);
+        $this->bindParam(':teams_nbr', $teamsNbr, \PDO::PARAM_INT);
+        $this->bindParam(':has_players', $hasPlayers, \PDO::PARAM_INT);
+        $this->bindParam(':players_nbr', $playersNbr, \PDO::PARAM_INT);
+        $this->bindParam(':players', $playersIds, \PDO::PARAM_STR);
+        $this->bindParam(':has_count_down', $hasCountDown, \PDO::PARAM_INT);
+        $this->bindParam(':count_down_duration', $countDownDuration, \PDO::PARAM_INT);
+        $this->bindParam(':has_help', $hasHelp, \PDO::PARAM_INT);
+        $this->bindParam(':help_duration', $helpDuration, \PDO::PARAM_INT);
+        $this->bindParam(':nb_questions', $nbQuestions, \PDO::PARAM_INT);
+        $this->bindParam(':has_random_songs', $hasRandomSongs, \PDO::PARAM_INT);
+        $this->bindParam(':playlist_id', $playlistId, \PDO::PARAM_INT);
+        $this->bindParam(':has_random_category', $hasRandomCategory, \PDO::PARAM_INT);
         $this->bindParam(':has_display_category', $hasDisplayCategory, \PDO::PARAM_INT);
-         $this->bindParam(':has_music', $hasMusic, \PDO::PARAM_INT);
-         $this->bindParam(':has_movies', $hasMovies, \PDO::PARAM_INT);
-         $this->bindParam(':has_cartoons', $hasCartoons, \PDO::PARAM_INT);
-         $this->bindParam(':has_Tv_shows', $hasTvShows, \PDO::PARAM_INT);
-        
+        $this->bindParam(':has_music', $hasMusic, \PDO::PARAM_INT);
+        $this->bindParam(':has_movies', $hasMovies, \PDO::PARAM_INT);
+        $this->bindParam(':has_cartoons', $hasCartoons, \PDO::PARAM_INT);
+        $this->bindParam(':has_Tv_shows', $hasTvShows, \PDO::PARAM_INT);
+
        return $this->execute();
     }
 
@@ -669,7 +668,7 @@ class GameConfig extends Database
     {
         $sql = "SELECT * FROM game_config
                 WHERE name=:name";
-        
+
         $this->prepare($sql);
         $this->bindParam(':name', $name, \PDO::PARAM_INT);
         $this->execute();

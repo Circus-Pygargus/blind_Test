@@ -1,0 +1,301 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+body,
+button {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+  background-color: #020202;
+  color: #f5f5f5;
+}
+
+body header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  /* height: 20vh; */
+}
+
+body header h1 {
+  color: #f5f5f5;
+  font-size: 6rem;
+  text-align: center;
+  margin: 50px 0 100px 0;
+}
+
+body main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body main section#song_section {
+  width: 60%;
+}
+
+body main section#song_section #song_div {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 2rem;
+}
+
+body main section#song_section #song_div #song-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body main section#song_section #song_div #song-row #song-infos_div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+body main section#song_section #song_div #song-row #song-infos_div #song-infos-titles_div,
+body main section#song_section #song_div #song-row #song-infos_div #song-infos-values_div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body main section#song_section #song_div #song-row #song-infos_div #song-infos-values_div {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body main section#song_section #song_div #song-row #song-infos-solution_div {
+  text-align: center;
+  height: 90px;
+  font-size: 4rem;
+  margin-top: 50px;
+  margin-bottom: 75px;
+}
+
+body main section#song_section #song_div #song-row #song-img_div {
+  width: 500px;
+  height: 500px;
+  background-image: url("../img/mr_machrichard.jpg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+body main section#song_section #song_div #music-player_div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 30px;
+}
+
+body main #teams-score_section {
+  padding-left: 35px;
+}
+
+body main #players-score_section {
+  padding-right: 35px;
+}
+
+body main #teams-score_section,
+body main #players-score_section {
+  display: inline-block;
+  margin-top: 35px;
+}
+
+body main #teams-score_section #teams-score_title,
+body main #teams-score_section #players-score_title,
+body main #players-score_section #teams-score_title,
+body main #players-score_section #players-score_title {
+  color: white;
+  font-size: 3rem;
+  text-align: center;
+  padding-top: 20px;
+  border: 1px solid white;
+  border-top-left-radius: 35px 35px;
+  border-top-right-radius: 35px 35px;
+  border-bottom: none;
+}
+
+body main #teams-score_section #teams-score_div,
+body main #teams-score_section #players-score_div,
+body main #players-score_section #teams-score_div,
+body main #players-score_section #players-score_div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-top: 10%;
+  padding-bottom: 20px;
+  border: 1px solid white;
+  border-bottom-left-radius: 35px 35px;
+  border-bottom-right-radius: 35px 35px;
+  border-top: none;
+}
+
+body main #teams-score_section #teams-score_div .team_div,
+body main #teams-score_section #teams-score_div .player_div,
+body main #teams-score_section #players-score_div .team_div,
+body main #teams-score_section #players-score_div .player_div,
+body main #players-score_section #teams-score_div .team_div,
+body main #players-score_section #teams-score_div .player_div,
+body main #players-score_section #players-score_div .team_div,
+body main #players-score_section #players-score_div .player_div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body main #teams-score_section #teams-score_div .team_div .team-name_div,
+body main #teams-score_section #teams-score_div .player_div .team-name_div,
+body main #teams-score_section #players-score_div .team_div .team-name_div,
+body main #teams-score_section #players-score_div .player_div .team-name_div,
+body main #players-score_section #teams-score_div .team_div .team-name_div,
+body main #players-score_section #teams-score_div .player_div .team-name_div,
+body main #players-score_section #players-score_div .team_div .team-name_div,
+body main #players-score_section #players-score_div .player_div .team-name_div {
+  text-align: right;
+  font-size: 2.65rem;
+  padding-left: 15px;
+}
+
+body main #teams-score_section #teams-score_div .team_div .player-name_div,
+body main #teams-score_section #teams-score_div .player_div .player-name_div,
+body main #teams-score_section #players-score_div .team_div .player-name_div,
+body main #teams-score_section #players-score_div .player_div .player-name_div,
+body main #players-score_section #teams-score_div .team_div .player-name_div,
+body main #players-score_section #teams-score_div .player_div .player-name_div,
+body main #players-score_section #players-score_div .team_div .player-name_div,
+body main #players-score_section #players-score_div .player_div .player-name_div {
+  text-align: left;
+  font-size: 2rem;
+  padding-right: 15px;
+}
+
+body main #teams-score_section #teams-score_div .team_div .team-score_div,
+body main #teams-score_section #teams-score_div .player_div .team-score_div,
+body main #teams-score_section #players-score_div .team_div .team-score_div,
+body main #teams-score_section #players-score_div .player_div .team-score_div,
+body main #players-score_section #teams-score_div .team_div .team-score_div,
+body main #players-score_section #teams-score_div .player_div .team-score_div,
+body main #players-score_section #players-score_div .team_div .team-score_div,
+body main #players-score_section #players-score_div .player_div .team-score_div {
+  text-align: center;
+  font-size: 2.65rem;
+}
+
+body main #teams-score_section #teams-score_div .team_div .player-score_div,
+body main #teams-score_section #teams-score_div .player_div .player-score_div,
+body main #teams-score_section #players-score_div .team_div .player-score_div,
+body main #teams-score_section #players-score_div .player_div .player-score_div,
+body main #players-score_section #teams-score_div .team_div .player-score_div,
+body main #players-score_section #teams-score_div .player_div .player-score_div,
+body main #players-score_section #players-score_div .team_div .player-score_div,
+body main #players-score_section #players-score_div .player_div .player-score_div {
+  text-align: center;
+  font-size: 2rem;
+}
+
+body main #teams-score_section #teams-score_div .team_div .team-name_div,
+body main #teams-score_section #teams-score_div .team_div .player-name_div,
+body main #teams-score_section #teams-score_div .player_div .team-name_div,
+body main #teams-score_section #teams-score_div .player_div .player-name_div,
+body main #teams-score_section #players-score_div .team_div .team-name_div,
+body main #teams-score_section #players-score_div .team_div .player-name_div,
+body main #teams-score_section #players-score_div .player_div .team-name_div,
+body main #teams-score_section #players-score_div .player_div .player-name_div,
+body main #players-score_section #teams-score_div .team_div .team-name_div,
+body main #players-score_section #teams-score_div .team_div .player-name_div,
+body main #players-score_section #teams-score_div .player_div .team-name_div,
+body main #players-score_section #teams-score_div .player_div .player-name_div,
+body main #players-score_section #players-score_div .team_div .team-name_div,
+body main #players-score_section #players-score_div .team_div .player-name_div,
+body main #players-score_section #players-score_div .player_div .team-name_div,
+body main #players-score_section #players-score_div .player_div .player-name_div {
+  min-width: 265px;
+}
+
+body main #teams-score_section #teams-score_div .team_div .team-score_div,
+body main #teams-score_section #teams-score_div .team_div .player-score_div,
+body main #teams-score_section #teams-score_div .player_div .team-score_div,
+body main #teams-score_section #teams-score_div .player_div .player-score_div,
+body main #teams-score_section #players-score_div .team_div .team-score_div,
+body main #teams-score_section #players-score_div .team_div .player-score_div,
+body main #teams-score_section #players-score_div .player_div .team-score_div,
+body main #teams-score_section #players-score_div .player_div .player-score_div,
+body main #players-score_section #teams-score_div .team_div .team-score_div,
+body main #players-score_section #teams-score_div .team_div .player-score_div,
+body main #players-score_section #teams-score_div .player_div .team-score_div,
+body main #players-score_section #teams-score_div .player_div .player-score_div,
+body main #players-score_section #players-score_div .team_div .team-score_div,
+body main #players-score_section #players-score_div .team_div .player-score_div,
+body main #players-score_section #players-score_div .player_div .team-score_div,
+body main #players-score_section #players-score_div .player_div .player-score_div {
+  width: 50px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+body main #teams-score_section #teams-score_div .player_div,
+body main #teams-score_section #players-score_div .player_div,
+body main #players-score_section #teams-score_div .player_div,
+body main #players-score_section #players-score_div .player_div {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+/*# sourceMappingURL=game.css.map */

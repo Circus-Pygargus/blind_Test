@@ -356,7 +356,7 @@ class Song extends Database
      * 
      * @return array
      */
-    public function getOneById (int $id) 
+    public function getOneById (int $id):array 
     {      
         $sql = "SELECT * FROM songs
                 WHERE id=:id";
@@ -366,4 +366,107 @@ class Song extends Database
         return $this->fetch();
     }
 
+
+    /**
+     * destroy remaining songs table if exists
+     */
+    public function destroyRemainingSongsTable ():void 
+    {
+        $sql = "DROP TABLE IF EXISTS remaining_songs";
+        $this->prepare($sql);
+        $this->execute();
+    }
+
+
+    /**
+     * create and fill a table to store all possible and remaining
+     */
+    public function createRemainingSongsTable (array $categories):void 
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS remaining_songs (
+                    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                    song_id INT)";
+        $this->prepare($sql);
+        $this->execute();
+
+
+        $sql = "INSERT INTO remaining_songs (song_id)
+                SELECT id FROM songs";
+        for ($i = 0; $i < count($categories); $i++) {
+            if ($i === 0) {
+                $sql .= " WHERE category = '" . $categories[$i] . "'";
+            }
+            else {
+                $sql .= " OR category = '" . $categories[$i] . "'";
+            }
+        }      
+        $this->prepare($sql);
+        $this->execute();
+    }
+
+
+    /**
+     * Get the number of remaining songs in db according to choosen categories
+     * 
+     * @param array categories // not needed any more
+     * 
+     * @return int
+     */
+    public function getNextRandomSong ():void 
+    {
+        session_start();
+       // var_dump('env var db : ' . $_SESSION["gameConfig"]); 
+         //idée de méthode:
+        //compter les lignes
+        // créer une colonne et remplir avec les numéros du compteur de lignes : Comment ???
+        // nbr aléatoire en php entre 0 et compteur
+        // choper avec la colonne créée
+        // pas trop lourd comme méthode de faire ça à chaque titre ?
+        $sql = "SELECT COUNT(id) FROM remaining_songs";
+        $this->prepare($sql);
+        $this->execute();
+        $songsNb = $this->fetchColumn();
+
+        $next_songId = rand(1, $songsNb);
+
+// utiliser le cursor ? mais comment ? ou utiliser $next_songId ? 
+        $sql = "SELECT song_id FROM remaining_songs";
+        $this->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+        $this->execute();
+        $this->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_ABS);
+    }
+
+
+    /**
+     * Remove played song from random remaining songs
+     * 
+     * @param int $songId
+     */
+    public function removeLastOneFromRemainingSongs (int $songId):void 
+    {
+        $sql = "DELETE FROM remaining_songs
+                WHERE song_id=:song_id";
+        $this->prepare($sql);
+        $this->bindParam(':song_id', $songId, \PDO::PARAM_INT);
+        $this->execute();  
+    }
+
+
+    public function getAllForRandomPlaylist (array $categories) 
+    {
+        $sql = "SELECT id FROM songs";
+        for ($i = 0; $i < count($categories); $i++) {
+            if ($i === 0) {
+                $sql .= " WHERE category = '" . $categories[$i] . "'";
+            }
+            else {
+                $sql .= " OR category = '" . $categories[$i] . "'";
+            }
+        }      
+        
+       // var_dump($sql);
+        $this->prepare($sql);
+        $this->execute();
+        return $this->fetchAll();
+    }
 }

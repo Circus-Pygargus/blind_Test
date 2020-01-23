@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Richard Meuret">
 
-    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="public/assets/css/admin.css">
 </head>
@@ -22,132 +24,183 @@
     <main>
 
 
+        <!-- need an inline display here -->
+        <div id="inline-sections_div">
 
-        <!-- used to display teams scores -->
-        <section id="teams-score_section">
+            <!-- used to display teams scores -->
+            <section id="teams-score_section">
 
-            <div id="teams-score_div">
-            <!--    {{ config.has_teams }}
+                <div id="teams-score_div">
+                <!--    {{ config.has_teams }}
+                        {% for team in teams %}
+                        <div class="team_div" id="team-{{ team.id }}_div">
+                            <div class="team-name_div" data-teamid="{{ team.id }}">{{ team.name }}</div>
+                            <div class="team-score_div" id="score-team_{{ team.id }}" data-teamid={{ team.id }}>{{ team.score }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                -->
+                    {% if config.has_teams == 1 %}
+
+                    {% block teamScore %}
+
                     {% for team in teams %}
                     <div class="team_div" id="team-{{ team.id }}_div">
-                        <div class="team-name_div" data-teamid="{{ team.id }}">{{ team.name }}</div>
+                        <div class="team-name_div" data-teamid="{{ team.id }}" style="color:{{ team.color }}">{{ team.name }}</div>
                         <div class="team-score_div" id="score-team_{{ team.id }}" data-teamid={{ team.id }}>{{ team.score }}
                         </div>
                     </div>
                     {% endfor %}
-            -->
-                {% if config.has_teams == 1 %}
 
-                {% block teamScore %}
+                    {% endblock %}
 
-                {% for team in teams %}
-                <div class="team_div" id="team-{{ team.id }}_div">
-                    <div class="team-name_div" data-teamid="{{ team.id }}" style="color:{{ team.color }}">{{ team.name }}</div>
-                    <div class="team-score_div" id="score-team_{{ team.id }}" data-teamid={{ team.id }}>{{ team.score }}
+                    {% endif %}
+                </div>
+            </section>
+
+
+
+
+
+            <!-- Infos about the pending / playing / played song -->
+            <section id="song_section">
+                {% block songBox %}
+                <div id="song_div">
+                    {% if end_game == 'Fin de la partie' %}
+                        {% block endGame %}
+                        <div id="end-of-game">Fin de la partie !!</div>
+                        {% endblock %}
+                    {% endif %}
+                    <!-- songs infos -->
+                    <div id="song-row">
+                        <div id="song-infos_div">
+                            <div id="song-infos-category_div" class="song-information">
+                                <div id="song-category">Catégorie : </div>
+                                <div class="song-info-value" id="song-category-value">{{ song.category }}</div>
+                            </div>
+                            <div id="song-infos-titles_div" class="song-information">
+                                <div id="song-title">Titre en cours : </div>
+                                <div class="song-info-value" id="song-title-value">{{ song.title }}</div>
+                            </div>
+                            <div id="song-infos-solution_div" class="song-information">
+                                <div id="song-solution">Réponse : </div>
+                                <div class="song-info-value" id="song-solution-value"> {{ song.solution }}</div>
+                            </div>
+                            {% if song.singer != song.solution %}
+                            <div id="song-infos-singer_div" class="song-information">
+                                <div id="song-singer">Interprète : </div>
+                                <div class="song-info-value" id="song-singer-value"> {{ song.singer }}</div>
+                            </div>
+                            {% endif %}
+                            <div id="song-infos-points_div" class="song-information">
+                                <div id="song-points">Nombre de points :</div>
+                                <div class="song-info-value" id="song-points-value">{{ song.points }}</div>
+                            </div>
+                        </div>
+                    <!--    <div id="song-infos_div">
+                            <div id="song-infos-titles_div">
+                                <div id="song-title">Titre en cours : </div>
+                                <div id="song-singer">Interprète : </div>
+                                <div id="song-category">Catégorie : </div>
+                                <div id="song-points">Nombre de points :</div>
+                            </div>
+                            <div id="song-infos-values_div">
+                                <div id="song-title-value">{{ song.title }}</div>
+                                <div id="song-singer-value"> {{ song.singer }}</div>
+                                <div id="song-category-value">{{ song.category }}</div>
+                                <div id="song-points-value">{{ song.points }}</div>
+                            </div>
+                        </div>
+                    -->
+
+                        <!-- here we'll fill this div with css background-image -->
+                        <div id="song-img_div" style="background-image: url(public/assets/img/{{ song.picture }})">
+                           <!-- <img src="public/img/{{ song.picture }}" alt="Une photo de {{ song.singer }}"> -->
+                        </div>
+                    </div>
+                    <!-- the song player -->
+                    <div id="music-player_div">
+                        <audio id="music-player" controls
+                            src="public/songs/{{ song.path }}{{ song.file}}.{{ song.extension }}">
+                            Ce navigateur ne supporte pas le lecteur audio.
+                        </audio>
                     </div>
                 </div>
-                {% endfor %}
-
                 {% endblock %}
+                
+            </section>
 
-                {% endif %}
+
+
+
+            <!-- used to display players scores -->
+            <section id="players-score_section">
+                <div id="players-score_div">
+                    {% if config.has_players %}
+                        {% block playersScore %}
+                            {% for player in players %}
+                                <div class="player_div" id="player-{{ player.id }}_div">
+                                    <div class="player-name_div" data-teamid="{{ player.team_id }}" data-playerid={{ player.id }} style="color:{{ player.color }}">
+                                        {{ player.name }}</div>
+                                    <div class="player-score_div" id="score-player_{{ player.id }}" data-playerid={{ player.id }}>
+                                        {{ player.score }}</div>
+                                </div>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endif %}
+                </div>
+            </section>
+
+        </div>
+
+
+
+        <!-- the control for game page -->
+        <section id="control-game-page_section">
+            <!-- End game message -->
+            <div id="end-game-message" hidden>Fin de la partie</div>
+            <div id="control-game-page_div">
+                <div>
+                    <button class="control_button" id="ask-for-next-song_button">Nouvelle chanson</button>
+                </div>
+                <!-- for the players page -->
+                <div>
+                    <button class="control_button" id="send-picture_button">Affiche l'image</button>                        
+                </div>
+                <div>
+                    <button class="control_button" id="send-solution_button">Affiche la réponse</button>                        
+                </div>
             </div>
         </section>
 
-
-
-
-
-        <!-- Infos about the pending / playing / played song -->
-        <section id="song_section">
-            <div id="song_div">
-                {% block songBox %}
-                <!-- songs infos -->
-                <div id="song-row">
-                    <div id="song-infos_div">
-                        <div id="song-infos-titles_div" class="song-information">
-                            <div id="song-title">Titre en cours : </div>
-                            <div class="song-info-value" id="song-title-value">{{ song.title }}</div>
+    <!-- the control for game page -->
+ <!--       <section id="control-game-page_section">
+            <div id="control-game-page_div">
+                    <!-- for the players page -->
+                <!-- <div id="send-response-div">
+                        <div>
+                            <button class="control_button" id="send-solution_button">Affiche la réponse</button>
                         </div>
-                        <div id="song-infos-singer_div" class="song-information">
-                            <div id="song-singer">Interprète : </div>
-                            <div class="song-info-value" id="song-singer-value"> {{ song.singer }}</div>
+                        <div>
+                            <button class="control_button" id="send-picture_button">Affiche l'image</button>
                         </div>
-                        <div id="song-infos-category_div" class="song-information">
-                            <div id="song-category">Catégorie : </div>
-                            <div class="song-info-value" id="song-category-value">{{ song.category }}</div>
-                        </div>
-                        <div id="song-infos-points_div" class="song-information">
-                            <div id="song-points">Nombre de points :</div>
-                            <div class="song-info-value" id="song-points-value">{{ song.points }}</div>
-                        </div>
-                    </div>
-                <!--    <div id="song-infos_div">
-                        <div id="song-infos-titles_div">
-                            <div id="song-title">Titre en cours : </div>
-                            <div id="song-singer">Interprète : </div>
-                            <div id="song-category">Catégorie : </div>
-                            <div id="song-points">Nombre de points :</div>
-                        </div>
-                        <div id="song-infos-values_div">
-                            <div id="song-title-value">{{ song.title }}</div>
-                            <div id="song-singer-value"> {{ song.singer }}</div>
-                            <div id="song-category-value">{{ song.category }}</div>
-                            <div id="song-points-value">{{ song.points }}</div>
-                        </div>
-                    </div>
-                -->
-
-                    <!-- here we'll fill this div with css background-image -->
-                    <div id="song-img_div" style="background-image: url(public/assets/img/{{ song.picture }})">
-                <!--        <img src="public/img/{{ song.picture }}" alt="Une photo de {{ song.singer }}"> -->
-                    </div>
-                </div>
+                </div> -->
                 <!-- the song player -->
-                <div id="music-player_div">
-
+                <!-- <div id="music-player_div">
                     <audio id="music-player" controls
                         src="public/songs/{{ song.path }}{{ song.file}}.{{ song.extension }}">
                         Ce navigateur ne supporte pas le lecteur audio.
                     </audio>
+                </div> -->
+                <!-- Next song button -->
+                <!-- <div>
+                    <button class="control_button" id="ask-for-next-song_button">Nouvelle chanson</button>
                 </div>
-                <!-- the control for game page -->
-                <div id="control-game-page_div">
-                    <div>
-                        <button id="openTab">OUVRE ONGLET</button>
-                    </div>
-                    <div>
-                        <button id="send">ENVOIE MESSAGE</button>                        
-                    </div>
-                </div>
-                {% endblock %}
             </div>
-            
-        </section>
+        </section> -->
 
 
 
-
-        <!-- used to display players scores -->
-        <section id="players-score_section">
-
-
-            <div id="players-score_div">
-                {% if config.has_players %}
-
-                {% block playersScore %}
-                {% for player in players %}
-                <div class="player_div" id="player-{{ player.id }}_div">
-                    <div class="player-name_div" data-teamid="{{ player.team_id }}" data-playerid={{ player.id }} style="color:{{ player.color }}">
-                        {{ player.name }}</div>
-                    <div class="player-score_div" id="score-player_{{ player.id }}" data-playerid={{ player.id }}>
-                        {{ player.score }}</div>
-                </div>
-                {% endfor %}
-                {% endblock %}
-                {% endif %}
-            </div>
-        </section>
     </main>
 
 
@@ -156,7 +209,7 @@
     <script>
         // for the post.message
 		// receiver page
-        var domain = 'http://localhost:8080';        
+        var domain = 'http://localhost:8080';
         var mainPage = '';
         // the message sent to the players page
         var message = {};
@@ -181,10 +234,10 @@
          //   mainPage = window.open(domain + '/play', '');
        // }
 
-       
+
        var teamNameDivs = document.querySelectorAll('.team-name_div');
        var teamScoreDivs = document.querySelectorAll('.team-score_div');
-       
+
        var playerNameDivs = document.querySelectorAll('.player-name_div');
        var playerScoreDivs = document.querySelectorAll('.player-score_div');
 
@@ -193,33 +246,83 @@
         var songImgDiv = document.querySelector('#song-img_div');
       //  songImgDiv.style.backgroundImage = 'url("../img/{{ song.picture }}")';
 
+      // end game message
+      var endGameMessagediv = document.querySelector('#end-game-message');
+
+      // special buttons
+        var sendSongPictureButton = document.querySelector('#send-picture_button');
+        var sendSolutionButton = document.querySelector('#send-solution_button');
+        var callNextSongButton = document.querySelector('#ask-for-next-song_button');
+        // the counter we'll send to the controller with playlist_id
+        var nbrQuestionsMax;
+        var playedSongs = 0;
+        // the song
+        var song;
+        var songHasBeenFound = false;
+
+
 
         // we have teams 
         var hasTeams = {{ config.has_teams | json_encode | raw }};
         var hasPlayers = {{ config.has_players | json_encode | raw }};
-        
+        var hasDisplayCategory = {{ config.has_display_category | json_encode | raw }};
+        var hasRandomSongs = {{ config.has_random_songs | json_encode | raw }};
+        if (hasRandomSongs) {
+            nbrQuestionsMax = {{ config.nbr_questions }};
+        }
    //   console.log({{ config.hasTeams }});
-        
+
+
+        /* ############## Event listener ############# */
+
+        // admin asked for the first song
+        callNextSongButton.addEventListener('click', function(){
+        //    console.log('nbr questions max ' + nbrQuestionsMax);
+        //    console.log('played songs' + playedSongs);
+            if (playedSongs === nbrQuestionsMax) {
+                askForEndGame();
+            }
+            else {
+                askForNewSong();
+            }
+        });
+
+
+        // admin want to send singer's picture to players
+        sendSongPictureButton.addEventListener('click', function(){
+            console.log('picture button clicked ' );
+            sendSongPicture();
+        });
+
+        // admin want to send the solution to the players page
+        sendSolutionButton.addEventListener('click', function(){
+            sendSongSolution();
+        });
+
+
 
         /* ############# beginning of the game, send infos to the player page ############## */
-        
-        // wait 5 seconds before sending infos
-        setTimeout( function(){ giveAllNeededInfosToPlayerPage()}, 5000);
+
+        // wait 3 seconds before sending infos
+        setTimeout( function(){ giveAllNeededInfosToPlayerPage()}, 3000);
 
         function giveAllNeededInfosToPlayerPage() {
+            console.log('lol');
             if (hasTeams) {
                 message.purpose = 'teams';
                 message.teams = {};
+                console.log('nbr of names : ' + teamNameDivs.length);
                 for (let i = 0; i < teamNameDivs.length; i++) {
                     message.teams[i] = {
                         'id': teamNameDivs[i].getAttribute('data-teamid'),
                         'name': teamNameDivs[i].innerHTML,
                         'color': teamNameDivs[i].style.color
-                    }
+                    };
+                    console.log('name : ' + message.teams[i].name);
                 }
                 mainPage.postMessage(message, domain);
             }
-            
+
             if (hasPlayers) {
                 message.purpose = 'players';
                 message.players = {};
@@ -228,19 +331,19 @@
                         'id': playerNameDivs[i].getAttribute('data-playerid'),
                         'name': playerNameDivs[i].innerHTML,
                         'color': playerNameDivs[i].style.color
-                    }
+                    };
                 }
                 mainPage.postMessage(message, domain);
             }
         }
 
-        
+
 
 
 
         /* #############  give points ############## */
 
-        
+
         // give points to a team
         // prepare and send message if a team name is clicked
         if (hasTeams && !hasPlayers) {
@@ -264,8 +367,8 @@
                     // send the message
                     mainPage.postMessage(message, domain);
 
-                    // next question 
-                    askForNewSong();
+                    // so this song has been found (too easy ?) 
+                    songHasBeenFound = true;
                 });
             }
         }
@@ -341,8 +444,8 @@
                      //  mainPage.postMessage(message, domain); //sending the message
                     }
 
-                    // next song
-                    askForNewSong();
+                    // so this song has been found (too easy ?) 
+                    songHasBeenFound = true;
                 });
             }
         }
@@ -372,12 +475,13 @@
         //    console.log(sortedByScore[0].id);
         //    var divToSort = document.querySelector('#' + sideToSort + 's-score_div');
             for (i = 0; i < sortedByScore.length; i++) {
+              //  console.log('sortedByScore[i].id : ' + sortedByScore[i].id);
                 let thisDiv = document.querySelector('#' + sideToSort + '-' + sortedByScore[i].id + '_div');
                 // adding - in front of score so that it will be first in order
                 // I could have used flex-direction:column-reverse in css, but more fun like that ;)
                 thisDiv.style.order = '-' + sortedByScore[i].score; 
             }
-            
+
 
          /*   var byDate = arrayOfObjects.slice(0);
             byDate.sort(function(a,b) {
@@ -397,16 +501,25 @@
                 utiliser un order sur une flexbox
                 https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Ordering_Flex_Items
 
-                
             */
         }
 
         // we need the next song
         function askForNewSong() {
           //  fetch('/admin/next_song/{{ config.playlist_id | json_encode | raw }}')
-            playlistId = {{ config.playlist_id }};
+
+// A METTRE A LA FIN DE LA METHODE UNE FOIS L4APPEL DE LAPREMIERE CHANSON INTEGRE
+//playedSongs++;
+//SI ISFIRSTSONG === TRUE : SONG_ID = 0
+// SI HASRANDOMSONGS === TRUE : PLAYLIST_ID = 0
+// IMPLEMENTER L'ADD/REMOVE 1 POINT A song.point EN BDD SELON songHasBeenFound
+//lastSongInfos = {{ config.playlist_id }};
+lastSongInfos = '{{ config.playlist_id }}/' + playedSongs;
+   //lastSongInfos = '{{ config.playlist_id }}/' + playedSongs + '/' + songHasBeenFound;
+
+
           //  console.log('playlistId: ' + playlistId);
-            fetch('/admin/next_song/' + playlistId)
+            fetch('/admin/next_song/' +           lastSongInfos)
             // then se lance si retour
             // reponse : ma variable
             .then( function(response){
@@ -415,17 +528,151 @@
             })
             .then( function(response){
                 // le html arrive en retour, on l'affiche dans body
-                console.log(response.render);
-                
-              songSection.innerHTML = response.render;
+            //    console.log(response.render);
+                if (response.reponse === 'ok') {
+                    // this song hasn't been found yet
+                    songHasBeenFound = false;
+                    songSection.innerHTML = response.render;
+                    //console.log(response.song);
+                    song = response.song;
+                    // for players page
+                    cleanPlayersPage();
+                    displayCategory(song);
+                    displaySongPoints(song);
+                }
             })
             // ici on gère les erreurs si mauvais retour ou erreur dans url, bref si erreur
             .catch( function (error){
                 // pour voir différentes erreurs, on peu modif l'url dans fetch()
-                console.log('erreur demande next song: ' + error.message);
+              //  console.log('erreur demande next song: ' + error.message);
             });
+
+            playedSongs++;
         }
-        
+
+
+        function askForEndGame () {
+
+            // Display info message on admin screen
+            endGameMessagediv.hidden = false;
+
+            // Send end game message to players screen
+            var message = {};
+            message.purpose = 'end';
+            message.end = 'Fin de la partie !';
+            // send the message
+            mainPage.postMessage(message, domain);
+            // en attendant mieux  (à réutiliser pour enregistrer le résultat de la partie ?)
+         //   fetch('/admin/end_game')
+            // then se lance si retour
+            // reponse : ma variable
+        //    .then( function(response){
+                // .json() : type de réponse pour récup un objet en json plutôt que du texte (on peut tester avec .text() pour voir)
+          //      return response.json();
+          //  })
+         //   .then( function(response){
+                // le html arrive en retour, on l'affiche dans body
+            //    console.log(response.render);
+               // AJOUTER UN BOUTON PARTIE SUIVANTE
+         //   })
+            // ici on gère les erreurs si mauvais retour ou erreur dans url, bref si erreur
+          //  .catch( function (error){
+                // pour voir différentes erreurs, on peu modif l'url dans fetch()
+            //    console.log('erreur demande next song: ' + error.message);
+           // });
+
+           // if (hasTeams) {
+
+              /*  console.log('score : ' + teamScoreDivs[0].innerHTML);
+                for (let i = 0; i < teamScoreDivs.length ; i++) {
+
+                }
+            */
+           //     var scoresById = [];
+           //     for (i = 0; i < teamScoreDivs.length; i++) {
+            //        console.log(sideScoreDiv[i]);
+           //         let scoreByIdForThis = {
+           //                                 id: teamScoreDivs[i].getAttribute('data-teamid'),
+            //                                score: teamScoreDivs[i].innerHTML
+            //        }
+            //        scoresById.push(scoreByIdForThis);
+            //    }
+            //    console.log(scoresById);
+                // use slice() to copy the array and not just make a reference
+             //   var sortedByScore = scoresById.slice(0);
+            //    sortedByScore.sort(function(a,b) {
+            //        return b.score - a.score;
+            //    });  
+              //  console.log('sortedByScore[0].score ' + sortedByScore[0].score);
+            //    var winnersTeamId = [];
+            //    winnersTeamId.push(sortedByScore[0].id);
+            //    for (let i = 0; i < sortedByScore.length; i++) {
+            //        if (sortedByScore[i].score === sortedByScore[0].score) {
+            //            winnersTeamId.push(sortedByScore[i].id);
+                        // JE NE SAIS PAS ENCORE COMMENT FAIRE LA SUITE
+                        // ET JE N'AI PAS LE TEMPS !!!
+             //       }
+             //   }
+
+           // }
+        }
+
+
+        function cleanPlayersPage () {
+            // the message
+            var message = {};
+            message.purpose = 'clean';
+            message.data = 'unused';
+            // send the message
+            mainPage.postMessage(message, domain);
+        }
+
+
+        // display category on players page
+        function displayCategory (song) {
+            if (hasDisplayCategory) {
+
+                // the message
+                var message = {};
+                message.purpose = 'category';
+                message.category = song.category;
+              //  console.log('category : ' + message.category);
+                // send the message
+                mainPage.postMessage(message, domain);
+            }
+        }
+
+        // display song points
+        function displaySongPoints (song) {
+            // the message
+            var message = {};
+            message.purpose = 'points';
+            message.points = song.points;
+            // send the message
+            mainPage.postMessage(message, domain);
+        }
+
+        // send song picture to players
+        function sendSongPicture () {
+            // the message
+            var message = {};
+            message.purpose = 'picture';
+          //  console.log('picture : ' + song.picture);
+            message.picture = song.picture;
+            // send the message
+            mainPage.postMessage(message, domain);
+        }
+
+        // send song solution to players
+        function sendSongSolution () {
+            // the message
+            var message = {};
+            message.purpose = 'solution';
+            message.solution = song.solution;
+            // send the message
+            mainPage.postMessage(message, domain);
+        }
+
     </script>
     {% endblock %}
 

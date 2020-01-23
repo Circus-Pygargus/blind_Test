@@ -1,4 +1,40 @@
 TODO :
+    _ dans admin.scss :
+        changer : .team-name_div { cursor: pointer; 
+        par une solution js selon si players ou pas
+
+    _ page admin: 
+        verifier que la première chanson est appelée, sinon score = NAN 
+        faire une pop-up pour signaler l'absence de chanson ?
+
+    _ Version perso : Ajout mdp avec un htpasswd ( google it ;) )
+        Version portFolio: utiliser des ziks libres de droits
+
+    _ Song.php : random song avec table remaining ou possible autrement ?
+
+    _ Song.php getNextRandomSong() un seul argument pour un ->prepare ?????
+    
+    _ Song.php  destroyRemainingSongsTable() 
+        seulement si exists ?
+
+
+
+    _ $_ENV indéfinie ? oui je dois utiliser $_SESSION
+
+
+
+    _ AdminController.php : manque vérif $playedSongs === $gameConfig['nbQuestions]
+
+    _ pb avec affichage solution sur players page 
+
+    _ avant envoi nombres de points vers players page, vérif nbr points != 1 pour un affichage propre de point(s)
+
+    _ avant envoi vers player page, vérif song.singer !== song.solution  
+    
+    _ ajouter une variable de session pour pouvoir gérer $dbGameConfig 
+        dans AdminController.php, et connaître le nom de la playlist
+        d'une méthode à l'autre
+
 
     _ transfert des données entre Admin page et Game page, voir cette page : 
         https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
@@ -7,6 +43,7 @@ TODO :
         coller default (ou autre) dans la colonne name
         ainsi qd on trouve ce nom, on sait qu'on peut la charger 
         et plus besoin de se casser la tête avec la récup d'id ;)
+    |-> 'next' utilisé, plutôt prendre une variable de session ?
 
     _ Controller/ConfigController.php :: checkConfig() :
         check les input reçus avec une regex, et n'envoyer 'ok' que si ok
@@ -21,6 +58,7 @@ TODO :
     _ ajouter verif name exists avant les appels de méthode add() en bdd
 
     _ long terme : 
+        - une fois le bouton nouvelle partie ajouté, recoller un hidden sur #endGameMessagediv dans la page admin
         - sauvegarder les Team, Player, GameConfig :            
             - ajouter bdd table teams une colonne playing (bool) :
                 permettra de sauvegarder des équipes personalisées.
@@ -35,7 +73,7 @@ TODO :
                 (plus facile de s'en souvenir)
             - ajouter à player les différentes team sauvegardées auxquelles il a appartenu ?
             - ajouter les colonnes id, playing et saved à game_config pour en garder d'autres
-                saved pour savoir si on la gardera après la fin de la partie
+                saved (bool) pour savoir si on la gardera après la fin de la partie
                 faire de m^me avec les autres entity
         | 
         |-> question : ça crée des trous dans la suite des id de la table,
@@ -45,12 +83,70 @@ TODO :
         _ pour une version tout public en ligne :
             - virer le table songs (ou mieux la remplir)
                 la remplacer par des appels à une api (deezer, spotify autre ? )
-                qui renverrais nom seulement les sons + infos + images de chaque Song
+                qui renverrait nom seulement les sons + infos + images de chaque Song
                 mais aussi une playlist des titres selon critères.
-                limiter à 10 secondes pour la légalité des droits du truc ?
+                limiter à 10 secondes pour la légalité des droits du truc ? 10 sec c'est mort ! pas le limite basse de temps de lecture pour les droits d'auteur
                 Ou mieux faire un genre de partenariat :
                 pas de limite de chrono mais bouton pour aller acheter le titre,
                 en retour petit pourcentage de la vente.
+
+        _ version multijoueur avec un écran par joueur
+            - créer une partie :
+                front :
+                    une page listant les parties avec possibilité de rejoindre une partie
+                        et un bouton nouvelle partie.
+                back :
+                    le controller reçoit la requête et réagit; 
+                    il crée une nouvelle partie après avoir choisi les options :
+                        nombre chansons, catégorie, (difficulté ?)
+            - continuer une partie sauvegardée :
+                on peut envisager également de donner la possibilité aux joueurs de
+                    donner un nom à leur match. On pourrait comptabiliser le nombre de parties
+                    gagnées ainsi que le nombre de bonnes réponses, et calculer le pourcentage de bonnes réponses.
+                np : ici il faut stocker le nombre de questions par partie pour pouvoir recalculer 
+                    le/les pourcentage trankilou
+                front :
+                    afficher 
+                        le nom de la partie
+                        la liste des joueurs
+                        le score
+            - rejoindre une partie : 
+                front :
+                    aller dans le chat de la partie ? (et/ou chat global ?)
+                    afficher les options choisies
+                back :
+                    chaque joueur reçoit un cookie l'identifiant
+                    ça permettra de reconnaître les joueurs
+            - démarrage de la partie :
+                une fois que le nombre de joueurs atteint (ou fin de chrono ?)
+            - nouvelle musique :
+                si pas dans la même pièce (une option ça, non ?) 
+                    chaque joueur charge la chanson 
+                    une fois que le titre est chargé par tous, on le lance 
+                si même pièce 
+                    celui qui a créé reçoit la zik
+                si même pièce et chez moi 
+                    le serveur envoie le son
+                chaque joueur peut donner sa réponse via un input text et un bouton submit
+                    (si même pièce, car le top serait une reconnaissance vocale)
+                    stokage du temps pour cette réponse 
+                        on pourra faire des moyennes : globale et par catégorie
+            - fin du temps impartit :
+                Vérification des réponses :
+                    option 1 : le serveur n'accepte que l'orthographe exact de la réponse
+                        majuscules aux noms et prénoms ou une mise en minuscule des textes avant comparaison ?
+                    option 2 : le serveur est capable de repérer une bonne réponse malgrés la présence de fautes
+                        vérif 
+                            de l'ordre des bonnes lettres
+                            que la différence du nombre de bonnes lettres entre 2 bonnes n'est pas trop grand
+                        acceptation 
+                            au poucentage de bonnes lettres bien placées ?
+                            inclure un nombre d'erreur max ?
+                    option 3 : renvoi les réponses fausses / toutes les réponses aux joueurs
+                        pour validation. ainsi les joueurs ne maîtrisant pas l'orthographe ne sont pas pénalisés
+                le serveur compte les points et renvoie le classement aux joueurs
+        |------> Voir ausi la partie un peu plus haut appelée : "sauvegarder les Team, Player, GameConfig"
+
 
 
 
@@ -63,9 +159,9 @@ QUESTIONS :
         comme dans editScore() ? oui
 
     _ comment stocker plusieurs valeurs dans une colonne ? 
-        possible directement des objets ?
-        par ex des player dans une team
-        ou des teams dans game_config ou des categories de question
+        possible directement des objets ? par ex des player dans une team
+            ou des teams dans game_config ou des categories de question
+        |->  NON, on stocke l'id des joueurs ou des teams   
         D'ailleurs, ne serait-il pas mieux de coller toutes les catégories de la partie 
             dans une seule colonne plutôt que dans 4 ? par ex avec une autre table catégories
 
@@ -84,21 +180,24 @@ QUESTIONS :
 
     _ j'ai le droit de faire ?
         getOne (int $id) { sql }
-        getOne (string $name) { sql }  A testrer
+        getOne (string $name) { sql }  A tester
 
 
 
 
 BUGS : 
-    _  templates/config.html.twig :: storeData() :
-        problème avec $counter en fin de fonction :
-        Pour chaque équipe, il n'enregistre que le dernier joueur,
-        résultat visible grace à console.log(_data) dans sendDatas(_data)
-        On peut aussi décommenter var_dump($decoded); dans src/Controller/ConfigController.php :: json()
-    |
-    |--> l'erreur semble venir de Entity/GameConfig.php add()   name et :name (instance au lieu de string) ? 
-            même couleur d'affichage dans Team.php et Player.php    
-        |-> nan j'ai rien dit, add() déconne justement car name est null
-            mais pourquoi name et :name sont écrit en bleu ??
+
+
+    Résolus :
+        _  templates/config.html.twig :: storeData() :
+            problème avec $counter en fin de fonction :
+            Pour chaque équipe, il n'enregistre que le dernier joueur,
+            résultat visible grace à console.log(_data) dans sendDatas(_data)
+            On peut aussi décommenter var_dump($decoded); dans src/Controller/ConfigController.php :: json()
+        |
+        |--> l'erreur semble venir de Entity/GameConfig.php add()   name et :name (instance au lieu de string) ? 
+                même couleur d'affichage dans Team.php et Player.php    
+            |-> nan j'ai rien dit, add() déconne justement car name est null
+                mais pourquoi name et :name sont écrit en bleu ??
 
 

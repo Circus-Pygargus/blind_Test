@@ -38,7 +38,7 @@ class ConfigController extends Controller {
     public function json () {
                 
         // ici c'est une affectation de vairiable sous condition
-        // si la partie à gauche du ? est vraie, on affecte le contenu, sinon $contentType=''
+        // si la partie à gauche du ? est vraie, on affecte le contenu, sinon (:) $contentType=''
 
                                     // gaffe ici CONTENT_TYPE avec un _ mais avec un - coté php
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
@@ -56,7 +56,7 @@ class ConfigController extends Controller {
     }
 
 
-    // check the inputs values
+    // check the inputs values and answer to ajax request
     private function checkConfig (array $config)
     {
 
@@ -143,7 +143,8 @@ class ConfigController extends Controller {
                                     $team->getName() 
                         );
                         if ($test) {
-                            echo 'ok player enregistré';
+                            // commented because interact with a json response
+                            //echo 'ok player enregistré';
                         }
                         else { 
                             echo 'enregistrement player en bdd raté';
@@ -190,7 +191,10 @@ class ConfigController extends Controller {
                             $playersIds,
                             0);
                             
-            if ($test) {echo 'ok team enregistrée';}
+            if ($test) {
+                // interacts with a json response
+                //echo 'ok team enregistrée';
+            }
             else { echo 'enregistrement team en bdd raté';}
   //  var_dump($team->getName());
                 // get the db team id
@@ -335,12 +339,20 @@ class ConfigController extends Controller {
                             $config['hasCartoons'], 
                             $config['hasTvShows'] );
         if ($test) {
-            echo 'ok player enregistré';}
+            // commented because interact with json response
+            // echo 'ok player enregistré';
+
+            // the game is launched from controller 
+        }
         else { 
             echo 'enregistrement player en bdd raté';
         }
+    
+        // commented because interact with json response
+        // echo 'game configuration saved in db !';  
+    
+    
 
-    echo 'game configuration saved in db !';   
  //   var_dump($gameConfig->getByName('next'));  
     /*    $gameConfig->setHasTeams($config['hasTeams']);
         $gameConfig->setHasTeamsNames($config['hasTeamsNames']);
@@ -433,7 +445,7 @@ array(15) {
             }
         }
   }
-  ["name"]                  => string(4) "next
+  ["name"]                  => string(4) "next"
   ["hasTeams"]              => bool(true)
   ["hasTeamsNames]          => bool(true)
   ["hasPlayersPoints"]      => bool(true)

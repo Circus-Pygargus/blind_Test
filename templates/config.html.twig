@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Richard Meuret">
 
-    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="public/css/config.css">
+    <link rel="stylesheet" type="text/css" href="public/assets/css/config.css">
 </head>
 
 <body>
@@ -31,7 +32,7 @@
                     <input class="radio-input hasTeam" type="radio" name="has-team-true" id="has-team-true"
                         value="true">Oui
                     <input class="radio-input hasTeam" type="radio" name="has-team-false" id="has-team-false"
-                        value="false">Non -->                        
+                        value="false">Non -->
                     <span class="form-title-span">Jouer en équipe : </span>
                     <div>
                         <input class="radio-input hasTeam" type="radio" name="has-team-true" id="has-team-true"
@@ -455,7 +456,7 @@
         };*/
 
         var defaultColors = [
-            ['#ff0000', 'saigneurs'],
+            ['#ff0000', 'Saigneurs'],
             ['#ff8800', 'Cucurb\'s'],
             ['#ffff00', 'Zoziaux'],
             ['#00ff00', 'Pom\'potes'],
@@ -768,6 +769,7 @@
         function setRandomSongs() {
 
             if (this.checked) {
+               // console.log('setrandomsongs' + this.value);
                 // with ramdom songs
                 if (this.value === "true") {
                     dataHasRandomSongs = true;
@@ -845,7 +847,11 @@
                 document.querySelector('#nb-questions-msg-error').classList.remove('msg-error--show');
             //    fakeBtnNbQuestions.style.opacity = 1;
                 nbQuestionsDiv.hidden = true;
-                randomCategoryDiv.hidden = false;
+            randomCategoryDiv.hidden = false;
+ /*
+ teamsDetails.hidden = false;
+ setTeamsDetailsContent();
+ */
             } else {
                 nbQuestions.classList.add('error');
                 document.querySelector('#nb-questions-msg-error').classList.add('msg-error--show');
@@ -869,7 +875,7 @@
                     ///document.querySelector('#random-category-true').disabled = true;
                 }                
                 randomCategoryDiv.hidden = true;
-                displayCategoryDiv.hidden = false;
+                categoriesDiv.hidden = false;
             }
         }
 
@@ -1004,7 +1010,7 @@
                 return;
             }
 
-            // show pop up
+            // show color picker pop up
             colorChoicePopUp.hidden = false;
             colorChoiceDiv = document.createElement('div');
             colorChoiceDiv.id = 'color-choice-div';
@@ -1386,17 +1392,20 @@
                     "Content-Type": "Application/json"
                 }
             })
-                .then( function(response){
-                   return response.json();
-                })
-                .then( function(response){
-                    if (response.reponse === 'ok') {
-                        console.log('fetch return, everything is fine !');
-                    }
-                    else {
-                        console.log(response);  
-                    }                
-                });
+            .then( function(response){
+                return response.json();
+            })
+            .then( function(response){
+                if (response.reponse === 'ok') {
+                    console.log('fetch return, everything is fine !');
+                    // Launch game by opening admin page
+                    // HERE I SHOULD CHECK ADMIN/NO ADMIN (OPTION DOESN'T EXISTS YET)
+                    location.replace('/admin');
+                }
+                else {
+                    console.log(response);  
+                }                
+            });
         }
 
 
